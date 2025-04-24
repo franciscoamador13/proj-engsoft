@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import salas.*;
 
 public class HomePage extends JFrame {
     private JPanel homePage;
@@ -14,7 +15,6 @@ public class HomePage extends JFrame {
         pack();
 
         startButton.addActionListener(this::startButtonActionPerformed);
-
     }
 
     private void startButtonActionPerformed(ActionEvent e) {
