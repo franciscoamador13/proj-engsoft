@@ -5,7 +5,7 @@ import javax.swing.*;
 public class SalasMainPage extends JFrame {
     private JPanel salasMainPage;
     private JLabel title;
-    private JButton adicionarNovasSalasButton;
+    private JButton adicionarNovasSalas;
     private JButton VerDetalhes1;
     private JButton Editar1;
     private JButton Remover1;
@@ -27,6 +27,7 @@ public class SalasMainPage extends JFrame {
 
         Editar1.addActionListener(e -> new Editar());
         VerDetalhes1.addActionListener(e -> new Detalhes());
+        adicionarNovasSalas.addActionListener(e -> new AdicionarNovasSalas());
 
 
     }
