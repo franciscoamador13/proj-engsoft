@@ -7,7 +7,7 @@ public class Detalhes extends JFrame {
 
         public Detalhes() {
             super("Menu Principal");
-            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             setContentPane(detalhesPage);
             pack();
             setVisible(true);

@@ -8,7 +8,7 @@ public class AdicionarNovasSalas extends JFrame {
 
     public AdicionarNovasSalas() {
         super("Menu Principal");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(adicionarSala);
         pack();
         setVisible(true);

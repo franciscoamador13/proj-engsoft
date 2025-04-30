@@ -8,7 +8,7 @@ public class Editar extends JFrame {
 
     public Editar() {
         super("Menu Principal");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(editarPage);
         pack();
         setVisible(true);
