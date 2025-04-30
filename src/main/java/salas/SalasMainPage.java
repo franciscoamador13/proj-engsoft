@@ -5,6 +5,16 @@ import javax.swing.*;
 public class SalasMainPage extends JFrame {
     private JPanel salasMainPage;
     private JLabel title;
+    private JButton adicionarNovasSalasButton;
+    private JButton VerDetalhes1;
+    private JButton Editar1;
+    private JButton Remover1;
+    private JButton VerDetalhes2;
+    private JButton Editar2;
+    private JButton Remover2;
+    private JButton VerDetalhes3;
+    private JButton Editar3;
+    private JButton Remover3;
 
     public SalasMainPage() {
         super("Página de Salas");
