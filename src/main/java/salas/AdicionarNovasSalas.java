@@ -14,8 +14,9 @@ public class AdicionarNovasSalas extends JFrame {
     private JTextField nrLinhas;
     private JTextField nrColunas;
     private JButton botaoAcessibilidade;
-    private JComboBox<String> comboBox1;
+    private JComboBox<String> nivelProjecao;
     private JCheckBox acessívelACadeirantesCheckBox;
+    private JComboBox<String> nivelSom;
 
     public AdicionarNovasSalas() {
         super("Menu Principal");
@@ -27,7 +28,16 @@ public class AdicionarNovasSalas extends JFrame {
         tiposSala.addElement("2D");
         tiposSala.addElement("3D");
         tiposSala.addElement("IMAX");
-        comboBox1.setModel(tiposSala);
+        nivelProjecao.setModel(tiposSala);
+
+        DefaultComboBoxModel<String> niveisSom = new DefaultComboBoxModel<>();
+        niveisSom.addElement("60 dB");
+        niveisSom.addElement("70–75 dB");
+        niveisSom.addElement("75–80 dB");
+        niveisSom.addElement("90–105 dB");
+        niveisSom.addElement("115 dB");
+        nivelSom.setModel(niveisSom);
+
 
         botaoAcessibilidade.setEnabled(false);
 
