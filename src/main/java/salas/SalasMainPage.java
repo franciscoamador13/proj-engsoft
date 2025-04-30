@@ -23,5 +23,11 @@ public class SalasMainPage extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+
+
+        Editar1.addActionListener(e -> new Editar());
+        VerDetalhes1.addActionListener(e -> new Detalhes());
+
+
     }
 }
