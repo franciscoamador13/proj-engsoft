@@ -10,10 +10,11 @@ public class MenuPage extends JFrame {
     private JButton vendasButton;
     private JButton barButton;
     private JButton statsButton;
+    private JButton catálogoButton;
 
     public MenuPage() {
         super("Menu Principal");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(menuPage);
         pack();
         setLocationRelativeTo(null);

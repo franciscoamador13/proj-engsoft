@@ -3,6 +3,7 @@ import javax.swing.*;
 public class HomePage extends JFrame {
     private JPanel homePage;
     private JButton startButton;
+    private JButton quioskButton;
 
     public HomePage(String title) {
         super(title);
@@ -12,6 +13,10 @@ public class HomePage extends JFrame {
 
         startButton.addActionListener(e -> {
             new MenuPage();
+        });
+
+        quioskButton.addActionListener(e -> {
+            new QuioskPage();
         });
     }
 
