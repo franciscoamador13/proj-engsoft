@@ -9,7 +9,7 @@
       <minimumSize width="800" height="600"/>
       <preferredSize width="800" height="600"/>
     </properties>
-    <border type="none"/>
+    <border type="none" title="a"/>
     <children>
       <component id="26537" class="javax.swing.JLabel">
         <constraints>
@@ -21,7 +21,7 @@
       </component>
       <component id="7ded2" class="javax.swing.JButton" binding="salasButton" default-binding="true">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Salas"/>
@@ -29,7 +29,7 @@
       </component>
       <component id="f0c3b" class="javax.swing.JButton" binding="sessoesButton">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Sessões"/>
@@ -59,12 +59,12 @@
           <text value="Restauração"/>
         </properties>
       </component>
-      <component id="4177a" class="javax.swing.JButton" binding="catálogoButton" default-binding="true">
+      <component id="5dbef" class="javax.swing.JButton" binding="filmesButton">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Catálogo"/>
+          <text value="Filmes"/>
         </properties>
       </component>
     </children>

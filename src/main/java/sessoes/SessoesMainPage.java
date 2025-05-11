@@ -11,8 +11,6 @@ public class SessoesMainPage extends JFrame{
     private JLabel title;
     private JButton editarButton;
     private JButton eliminarButton;
-    private JButton filtrarButton;
-    private JList list1;
     private JButton adicionarNovaSessaoButton;
 
     public SessoesMainPage() {
