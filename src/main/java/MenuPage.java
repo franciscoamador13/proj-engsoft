@@ -1,5 +1,7 @@
 import salas.SalasMainPage;
 import sessoes.SessoesMainPage;
+import vendas.vendasMainPage;
+import restauracao.barMainPage;
 
 import javax.swing.*;
 
@@ -22,8 +24,8 @@ public class MenuPage extends JFrame {
 
         salasButton.addActionListener(e -> new SalasMainPage());
         sessoesButton.addActionListener(e -> new SessoesMainPage());
-        //vendasButton.addActionListener(e -> new VendasMainPage());
-        //barButton.addActionListener(e -> new BarMainPage());
+        vendasButton.addActionListener(e -> new vendasMainPage());
+        barButton.addActionListener(e -> new barMainPage());
         //statsButton.addActionListener(e -> new StatsMainPage());
     }
 }
