@@ -9,6 +9,7 @@ public class vendasMainPage extends JFrame {
     private JTextField fieldCondicao;
     private JButton adicionarDescontoButton;
     private JTextField fieldPrecoBilhete;
+    private JButton alterarPreçoButton;
     private Bilhete bilheteAtual;
 
     public vendasMainPage() {
