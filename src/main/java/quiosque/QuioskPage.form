@@ -19,7 +19,7 @@
           <text value="Quiosque"/>
         </properties>
       </component>
-      <grid id="f975b" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="f975b" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -76,17 +76,9 @@
                         <constraints/>
                         <properties>
                           <model>
-                            <item value="Pipoca média"/>
-                            <item value="Pipoca grande"/>
-                            <item value="refrigerante"/>
-                            <item value="f"/>
-                            <item value="f"/>
-                            <item value="f"/>
-                            <item value="f"/>
-                            <item value="f"/>
-                            <item value="f"/>
-                            <item value="f"/>
-                            <item value="f"/>
+                            <item value="Pipoca média - 3€"/>
+                            <item value="Pipoca grande - 5€"/>
+                            <item value="refrigerante pequeno - 2€"/>
                           </model>
                         </properties>
                       </component>
@@ -238,9 +230,9 @@
                     <constraints/>
                     <properties>
                       <model>
-                        <item value="Pipoca média + refrigerante médio"/>
-                        <item value="pipoca pequena + refrigerante pequeno"/>
-                        <item value="pipoca grande + refrigerante grande"/>
+                        <item value="Pipoca média + refrigerante médio - 10€"/>
+                        <item value="pipoca pequena + refrigerante pequeno -8€"/>
+                        <item value="pipoca grande + refrigerante grande - 12€"/>
                       </model>
                     </properties>
                   </component>
@@ -256,6 +248,24 @@
               <text value="Escolher lugar"/>
             </properties>
           </component>
+          <grid id="a8792" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="5faa8" class="javax.swing.JButton" binding="confirmarButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Confirmar"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
       <grid id="11b24" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -291,17 +301,9 @@
                 <constraints/>
                 <properties>
                   <model>
-                    <item value="joa"/>
-                    <item value="dff"/>
-                    <item value="f"/>
-                    <item value="f"/>
-                    <item value="f"/>
-                    <item value="f"/>
-                    <item value="f"/>
-                    <item value="f"/>
-                    <item value="f"/>
-                    <item value="f"/>
-                    <item value="f"/>
+                    <item value="Filme da abelha - 19h"/>
+                    <item value="Filme do cão - 15h"/>
+                    <item value="Filme da cobra - 8h"/>
                   </model>
                 </properties>
               </component>
