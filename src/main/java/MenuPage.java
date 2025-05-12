@@ -1,3 +1,4 @@
+import estatisticas.statsMainPage;
 import filmes.FilmesMainPage;
 import salas.SalasMainPage;
 import sessoes.SessoesMainPage;
@@ -30,7 +31,7 @@ public class MenuPage extends JFrame {
         vendasButton.addActionListener(e -> new vendasMainPage());
         barButton.addActionListener(e -> new barMainPage());
         filmesButton.addActionListener(e -> new FilmesMainPage());
-        //statsButton.addActionListener(e -> new StatsMainPage());
+        statsButton.addActionListener(e -> new statsMainPage());
         faturasButton.addActionListener(e -> new consultarFatura());
     }
 }
