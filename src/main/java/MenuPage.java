@@ -3,6 +3,7 @@ import salas.SalasMainPage;
 import sessoes.SessoesMainPage;
 import vendas.vendasMainPage;
 import restauracao.barMainPage;
+import faturas.consultarFatura;
 
 import javax.swing.*;
 
@@ -14,6 +15,7 @@ public class MenuPage extends JFrame {
     private JButton barButton;
     private JButton statsButton;
     private JButton filmesButton;
+    private JButton faturasButton;
 
     public MenuPage() {
         super("Menu Principal");
@@ -29,5 +31,6 @@ public class MenuPage extends JFrame {
         barButton.addActionListener(e -> new barMainPage());
         filmesButton.addActionListener(e -> new FilmesMainPage());
         //statsButton.addActionListener(e -> new StatsMainPage());
+        faturasButton.addActionListener(e -> new consultarFatura());
     }
 }

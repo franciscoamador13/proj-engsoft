@@ -14,6 +14,7 @@ public class QuioskPage extends JFrame {
     private JTextField textField1;
     private JTextField textField2;
     private JButton escolherLugarButton;
+    private JList list3;
 
     public QuioskPage() {
         super("Página quiosque");

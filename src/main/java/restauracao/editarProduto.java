@@ -9,6 +9,7 @@ public class editarProduto extends JFrame {
     private JTextField textField3;
     private JPanel editarProdutoPage;
     private JButton submeterButton;
+    private JButton removerProdutoButton;
 
 
     public editarProduto(String title) {
