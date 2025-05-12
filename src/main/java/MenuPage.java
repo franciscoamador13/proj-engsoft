@@ -1,8 +1,8 @@
 import estatisticas.statsMainPage;
 import filmes.FilmesMainPage;
+import vendas.vendasMainPage;
 import salas.SalasMainPage;
 import sessoes.SessoesMainPage;
-import vendas.vendasMainPage;
 import restauracao.barMainPage;
 import faturas.consultarFatura;
 

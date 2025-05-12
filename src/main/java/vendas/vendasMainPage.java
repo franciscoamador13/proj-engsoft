@@ -4,12 +4,12 @@ import javax.swing.*;
 
 public class vendasMainPage extends JFrame {
     private JPanel mainPageVendas;
-    private JComboBox comboBox1;
-    private JTextField fieldPrecoDesconto;
-    private JTextField fieldCondicao;
+    private JList list1;
+    private JTextField textField1;
     private JButton adicionarDescontoButton;
-    private JTextField fieldPrecoBilhete;
-    private JButton alterarPreçoButton;
+    private JButton editarDescontosButton;
+    private JButton removerDescontosButton;
+    private JButton alterarPreçoFixoDoButton;
     private Bilhete bilheteAtual;
 
     public vendasMainPage() {
@@ -20,19 +20,20 @@ public class vendasMainPage extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        adicionarDescontoButton.addActionListener(e -> {
-            String condicao = fieldPrecoDesconto.getText();
-            String valorTexto = fieldCondicao.getText();
 
-            if ( !condicao.isEmpty() && !valorTexto.isEmpty()) {
-                double valorDouble = Double.parseDouble(valorTexto);
-                Desconto desconto = new Desconto(condicao, valorDouble);
-                comboBox1.addItem(desconto);
-                fieldPrecoDesconto.setText("");
-                fieldCondicao.setText("");
-            } else {
-                JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos.");
-            }
+        alterarPreçoFixoDoButton.addActionListener(e -> {
+            new alterarPrecoBilhete();
         });
+
+        editarDescontosButton.addActionListener(e -> {
+            new editarDesconto();
+        });
+
+        adicionarDescontoButton.addActionListener(e -> {
+            new adicionarDesconto();
+        });
+
+
     }
+
 }

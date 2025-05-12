@@ -11,6 +11,7 @@ public class barMainPage extends JFrame {
     private JButton editarProdutoButton;
     private JButton criarBundleButton;
     private JTable table2;
+    private JButton removerStockButton;
     private DefaultTableModel tableModelProdutos;
     private DefaultTableModel tableModelBundles;
 
@@ -30,18 +31,12 @@ public class barMainPage extends JFrame {
         table2.setModel(tableModelBundles);
 
         // Adicionar produtos
-        adicionarProduto("Café", 1.20, 50, "Bebida");
-        adicionarProduto("Cerveja", 2.50, 100, "Bebida Alcoólica");
-        adicionarProduto("Refrigerante", 1.80, 75, "Bebida");
-        adicionarProduto("Água Mineral", 1.00, 120, "Bebida");
-        adicionarProduto("Sandes Mista", 3.50, 25, "Comida");
-        adicionarProduto("Pastel de Nata", 1.30, 40, "Pastelaria");
-        adicionarProduto("Pipoca", 2.00, 60, "Snack");
+        adicionarProduto("Pipoca pequena", 2.50, "Aperitivo");
+        adicionarProduto("Coca-cola 250ml", 1.80, 75, "Bebida");
+        adicionarProduto("Água 33cl", 1.00, 120, "Bebida");
 
         // Adicionar bundles de exemplo
-        adicionarBundle("Pipoca + Refrigerante", 3.50, 50, "Combo Cinema");
-        adicionarBundle("Sandes Mista + Água Mineral", 4.20, 30, "Combo Lanche");
-        adicionarBundle("Café + Pastel de Nata", 2.30, 40, "Combo Café");
+        adicionarBundle("Pipoca pequena + Coca-cola 250ml", 5.50, 50, "Combo Cinema");
 
         pack();
         setLocationRelativeTo(null);
@@ -63,17 +58,33 @@ public class barMainPage extends JFrame {
             new criarbundle("Criar bundle");
         });
 
+        removerStockButton.addActionListener(e -> {
+            new removerStock();
+        });
+
     }
 
+    // Método sobrecarregado que aceita 3 parâmetros (sem stock)
+    private void adicionarProduto(String nome, double preco, String tipo) {
+        // Chama o método de 4 parâmetros com um valor padrão para o stock (0)
+        adicionarProduto(nome, preco, 0, tipo);
+    }
+
+    // Método original que aceita 4 parâmetros (com stock)
     private void adicionarProduto(String nome, double preco, int stock, String tipo) {
         Object[] linha = {nome, preco, stock, tipo};
         tableModelProdutos.addRow(linha);
     }
 
+    // Método sobrecarregado que aceita 3 parâmetros (sem stock)
+    private void adicionarBundle(String produtos, double preco, String tipo) {
+        // Chama o método de 4 parâmetros com um valor padrão para o stock (0)
+        adicionarBundle(produtos, preco, 0, tipo);
+    }
 
+    // Método original que aceita 4 parâmetros (com stock)
     private void adicionarBundle(String produtos, double preco, int stock, String tipo) {
         Object[] linha = {produtos, preco, stock, tipo};
         tableModelBundles.addRow(linha);
     }
-
 }
