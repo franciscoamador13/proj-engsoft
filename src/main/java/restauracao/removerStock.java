@@ -10,7 +10,7 @@ public class removerStock extends JFrame {
     private JTextField textField1;
 
     public removerStock() {
-        super("Alterar preço");
+        super("Remover stock");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(removerStockPage);
         pack();

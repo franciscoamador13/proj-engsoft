@@ -4,9 +4,9 @@ import javax.swing.*;
 
 public class editarProduto extends JFrame {
     private JComboBox comboBox1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField cocaCola250mlTextField;
+    private JTextField a2TextField;
+    private JTextField bebidaTextField;
     private JPanel editarProdutoPage;
     private JButton submeterButton;
     private JButton removerProdutoButton;
