@@ -15,39 +15,25 @@ public class editarSala extends JFrame {
 
     private SalasMainPage mainPage;
     private Sala salaAtual;
+    private String nomeOriginal;
     private List<String> lugaresAcessiveis = new ArrayList<>();
+    private DadosSalas dadosSalas;
 
-    // Construtor que recebe a sala já selecionada
+
     public editarSala(SalasMainPage mainPage, Sala salaParaEditar) {
         super("Editar Sala");
         this.mainPage = mainPage;
         this.salaAtual = salaParaEditar;
+        this.nomeOriginal = salaParaEditar.getNomeSala();
+        this.dadosSalas = DadosSalas.getInstance();
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(editarSalaPage);
         setValues();
         criarListeners();
 
-        // Carregar dados da sala selecionada
+
         carregarDadosSala();
-
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }
-
-    // Construtor original mantido para compatibilidade (caso seja chamado sem sala)
-    public editarSala(SalasMainPage mainPage) {
-        super("Editar Sala");
-        this.mainPage = mainPage;
-
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setContentPane(editarSalaPage);
-        setValues();
-        criarListeners();
-
-        // Primeiro, selecionar uma sala
-        selecionarSala();
 
         pack();
         setLocationRelativeTo(null);
@@ -72,37 +58,7 @@ public class editarSala extends JFrame {
         cancelarEdiçãoButton.addActionListener(e -> dispose());
     }
 
-    private void selecionarSala() {
-        List<Sala> salas = mainPage.getSalas();
 
-        if (salas.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Não há salas para editar.", "Erro", JOptionPane.ERROR_MESSAGE);
-            dispose();
-            return;
-        }
-
-        // Criar array para o JList
-        Sala[] salasArray = salas.toArray(new Sala[0]);
-
-        // Mostrar diálogo de seleção
-        Sala salaSelecionada = (Sala) JOptionPane.showInputDialog(
-                this,
-                "Selecione a sala para editar:",
-                "Selecionar Sala",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                salasArray,
-                salasArray[0]
-        );
-
-        if (salaSelecionada == null) {
-            dispose();
-            return;
-        }
-
-        this.salaAtual = salaSelecionada;
-        carregarDadosSala();
-    }
 
     private void carregarDadosSala() {
         nomeSala.setText(salaAtual.getNomeSala());
@@ -112,7 +68,6 @@ public class editarSala extends JFrame {
         nivelSom.setSelectedItem(salaAtual.getNivelSom());
         acessívelACadeirantesCheckBox.setSelected(salaAtual.isAcessivelCadeirantes());
 
-        // Copiar lugares acessíveis
         lugaresAcessiveis.clear();
         lugaresAcessiveis.addAll(salaAtual.getLugaresAcessiveis());
 
@@ -124,6 +79,12 @@ public class editarSala extends JFrame {
             String nome = nomeSala.getText().trim();
             if (nome.isEmpty()) {
                 showError("Por favor insira o nome da sala.", "Campo obrigatório");
+                return;
+            }
+
+
+            if (!nome.equals(nomeOriginal) && dadosSalas.existeSala(nome)) {
+                showError("Já existe uma sala com o nome '" + nome + "'. Por favor escolha outro nome.", "Nome duplicado");
                 return;
             }
 
@@ -141,7 +102,7 @@ public class editarSala extends JFrame {
                 return;
             }
 
-            // Atualizar dados da sala usando getters/setters
+
             salaAtual.setNomeSala(nome);
             salaAtual.setLinhas(linhas);
             salaAtual.setColunas(colunas);
@@ -149,7 +110,7 @@ public class editarSala extends JFrame {
             salaAtual.setNivelSom((String) nivelSom.getSelectedItem());
             salaAtual.setAcessivelCadeirantes(acessivel);
 
-            // Atualizar lugares acessíveis
+
             salaAtual.getLugaresAcessiveis().clear();
             if (acessivel) {
                 lugaresAcessiveis.sort((a, b) -> {
@@ -159,10 +120,18 @@ public class editarSala extends JFrame {
                 salaAtual.getLugaresAcessiveis().addAll(lugaresAcessiveis);
             }
 
-            // Atualizar lista na página principal
-            mainPage.atualizarLista();
 
-            JOptionPane.showMessageDialog(this, "Sala '" + nome + "' editada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            dadosSalas.atualizarSala(salaAtual);
+
+
+            if (mainPage != null) {
+                mainPage.atualizarLista();
+            }
+
+            JOptionPane.showMessageDialog(this,
+                    "Sala '" + nome + "' editada com sucesso!\n" +
+                            "Total de salas: " + dadosSalas.getNumeroSalas(),
+                    "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
 
         } catch (NumberFormatException ex) {
@@ -203,7 +172,7 @@ public class editarSala extends JFrame {
                 }
             }
 
-            JPanel painelControle = new JPanel();
+            JPanel painelControle = new JPanel(new FlowLayout());
             JButton btnConfirmar = new JButton("Confirmar");
             JButton btnCancelar = new JButton("Cancelar");
 
@@ -215,13 +184,13 @@ public class editarSala extends JFrame {
             });
 
             btnCancelar.addActionListener(e -> janela.dispose());
+
             painelControle.add(btnConfirmar);
             painelControle.add(btnCancelar);
 
-            janela.add(new JPanel(new BorderLayout()) {{
-                add(painelBotoes, BorderLayout.CENTER);
-                add(painelControle, BorderLayout.SOUTH);
-            }});
+            janela.setLayout(new BorderLayout());
+            janela.add(painelBotoes, BorderLayout.CENTER);
+            janela.add(painelControle, BorderLayout.SOUTH);
 
             janela.pack();
             janela.setLocationRelativeTo(this);

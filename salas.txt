@@ -1,0 +1,2 @@
+Sala 3|3D|70–75 dB|5|4|false|
+Sala 1|2D|90–105 dB|26|26|false|

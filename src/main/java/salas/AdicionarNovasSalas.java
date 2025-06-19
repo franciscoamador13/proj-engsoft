@@ -13,10 +13,12 @@ public class AdicionarNovasSalas extends JFrame {
     private JCheckBox acessívelACadeirantesCheckBox;
     private SalasMainPage mainPage;
     private List<String> lugaresAcessiveis = new ArrayList<>();
+    private DadosSalas dadosSalas; // Referência ao singleton
 
     public AdicionarNovasSalas(SalasMainPage mainPage) {
         super("Adicionar nova Sala");
         this.mainPage = mainPage;
+        this.dadosSalas = DadosSalas.getInstance(); // Obter instância do singleton
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(adicionarSala);
@@ -52,6 +54,12 @@ public class AdicionarNovasSalas extends JFrame {
                 return;
             }
 
+
+            if (dadosSalas.existeSala(nome)) {
+                showError("Já existe uma sala com o nome '" + nome + "'. Por favor escolha outro nome.", "Nome duplicado");
+                return;
+            }
+
             int linhas = Integer.parseInt(nrLinhas.getText());
             int colunas = Integer.parseInt(nrColunas.getText());
 
@@ -77,8 +85,18 @@ public class AdicionarNovasSalas extends JFrame {
                 novaSala.getLugaresAcessiveis().addAll(lugaresAcessiveis);
             }
 
-            mainPage.adicionarSala(novaSala);
-            JOptionPane.showMessageDialog(this, "Sala '" + nome + "' criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+            dadosSalas.adicionarSala(novaSala);
+
+
+            if (mainPage != null) {
+                mainPage.adicionarSala(novaSala);
+            }
+
+            JOptionPane.showMessageDialog(this,
+                    "Sala '" + nome + "' criada com sucesso!\n" +
+                            "Total de salas: " + dadosSalas.getNumeroSalas(),
+                    "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
 
         } catch (NumberFormatException ex) {
