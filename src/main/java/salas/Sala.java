@@ -1,3 +1,5 @@
+package salas;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,70 +22,32 @@ public class Sala {
         this.lugaresAcessiveis = new ArrayList<>();
     }
 
-    public String getNomeSala() {
-        return nomeSala;
-    }
+    // Getters
+    public String getNomeSala() { return nomeSala; }
+    public String getNivelProjecao() { return nivelProjecao; }
+    public String getNivelSom() { return nivelSom; }
+    public int getLinhas() { return linhas; }
+    public int getColunas() { return colunas; }
+    public boolean isAcessivelCadeirantes() { return acessivelCadeirantes; }
+    public List<String> getLugaresAcessiveis() { return lugaresAcessiveis; }
 
-    public String getNivelProjecao() {
-        return nivelProjecao;
-    }
-
-    public String getNivelSom() {
-        return nivelSom;
-    }
-
-    public int getLinhas() {
-        return linhas;
-    }
-
-    public int getColunas() {
-        return colunas;
-    }
-
-    public boolean isAcessivelCadeirantes() {
-        return acessivelCadeirantes;
-    }
-
-    public List<String> getLugaresAcessiveis() {
-        return lugaresAcessiveis;
-    }
-
-    public void setNomeSala(String nomeSala) {
-        this.nomeSala = nomeSala;
-    }
-
-    public void setNivelProjecao(String nivelProjecao) {
-        this.nivelProjecao = nivelProjecao;
-    }
-
-    public void setNivelSom(String nivelSom) {
-        this.nivelSom = nivelSom;
-    }
-
-    public void setLinhas(int linhas) {
-        this.linhas = linhas;
-    }
-
-    public void setColunas(int colunas) {
-        this.colunas = colunas;
-    }
-
-    public void setAcessivelCadeirantes(boolean acessivelCadeirantes) {
-        this.acessivelCadeirantes = acessivelCadeirantes;
-    }
+    // Setters
+    public void setNomeSala(String nomeSala) { this.nomeSala = nomeSala; }
+    public void setNivelProjecao(String nivelProjecao) { this.nivelProjecao = nivelProjecao; }
+    public void setNivelSom(String nivelSom) { this.nivelSom = nivelSom; }
+    public void setLinhas(int linhas) { this.linhas = linhas; }
+    public void setColunas(int colunas) { this.colunas = colunas; }
+    public void setAcessivelCadeirantes(boolean acessivelCadeirantes) { this.acessivelCadeirantes = acessivelCadeirantes; }
 
     // Método toString para exibição no JList
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(nomeSala)
-                .append(" - ").append(nivelProjecao)
-                .append(" (").append(linhas).append("x").append(colunas).append(")");
+        String resultado = nomeSala + " - " + nivelProjecao + " (" + linhas + "x" + colunas + ") - " + nivelSom;
 
-        if (acessivelCadeirantes) {
-            sb.append(" [Acessível: ").append(lugaresAcessiveis.size()).append(" lugares]");
+        if (acessivelCadeirantes && !lugaresAcessiveis.isEmpty()) {
+            resultado += " [Lugares Acessíveis: " + String.join(", ", lugaresAcessiveis) + "]";
         }
 
-        return sb.toString();
+        return resultado;
     }
 }
