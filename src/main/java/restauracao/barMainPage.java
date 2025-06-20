@@ -14,9 +14,11 @@ public class barMainPage extends JFrame {
     private JButton removerStockButton;
     private DefaultTableModel tableModelProdutos;
     private DefaultTableModel tableModelBundles;
+    private DadosRestauracao dadosRestauracao;
 
     public barMainPage() {
         super("Página de gestão de bar");
+        this.dadosRestauracao = DadosRestauracao.getInstance();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(mainPageBar);
 
@@ -30,20 +32,32 @@ public class barMainPage extends JFrame {
         tableModelBundles = new DefaultTableModel(colunasBundles, 0);
         table2.setModel(tableModelBundles);
 
-        // Adicionar produtos
-        adicionarProduto("Pipoca pequena", 2.50, "Aperitivo");
-        adicionarProduto("Coca-cola 250ml", 1.80, 75, "Bebida");
-        adicionarProduto("Água 33cl", 1.00, 120, "Bebida");
+        // Carregar produtos existentes
+        for (Produto produto : dadosRestauracao.getProdutos()) {
+            adicionarProduto(
+                produto.getNome(),
+                produto.getPreco(),
+                produto.getStock(),
+                produto.getTipo()
+            );
+        }
 
-        // Adicionar bundles de exemplo
-        adicionarBundle("Pipoca pequena + Coca-cola 250ml", 5.50, 50, "Combo Cinema");
+        // Carregar bundles existentes
+        for (Bundle bundle : dadosRestauracao.getBundles()) {
+            adicionarBundle(
+                bundle.getProdutosString(),
+                bundle.getPreco(),
+                bundle.getStockAgrupado(dadosRestauracao),
+                bundle.getTipo()
+            );
+        }
 
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
 
         adicionarNovoProdutoButton.addActionListener(e -> {
-            new adicionarProduto("Adicionar produto");
+            new adicionarProduto("Adicionar produto", this);
         });
 
         registarNovoStockButton.addActionListener(e -> {
@@ -51,40 +65,39 @@ public class barMainPage extends JFrame {
         });
 
         editarProdutoButton.addActionListener(e -> {
-            new editarProduto("Editar produto");
+            new editarProduto("Editar produto", this);
         });
 
         criarBundleButton.addActionListener(e -> {
-            new criarbundle("Criar bundle");
+            new criarbundle("Criar bundle", this);
         });
 
         removerStockButton.addActionListener(e -> {
-            new removerStock();
+            new removerStock(this);
         });
-
     }
 
     // Método sobrecarregado que aceita 3 parâmetros (sem stock)
-    private void adicionarProduto(String nome, double preco, String tipo) {
+    public void adicionarProduto(String nome, double preco, String tipo) {
         // Chama o método de 4 parâmetros com um valor padrão para o stock (0)
         adicionarProduto(nome, preco, 0, tipo);
     }
 
     // Método original que aceita 4 parâmetros (com stock)
-    private void adicionarProduto(String nome, double preco, int stock, String tipo) {
-        Object[] linha = {nome, preco, stock, tipo};
+    public void adicionarProduto(String nome, double preco, int stock, String tipo) {
+        Object[] linha = {nome, String.format("%.2f", preco).replace(".", ","), stock, tipo};
         tableModelProdutos.addRow(linha);
     }
 
     // Método sobrecarregado que aceita 3 parâmetros (sem stock)
-    private void adicionarBundle(String produtos, double preco, String tipo) {
+    public void adicionarBundle(String produtos, double preco, String tipo) {
         // Chama o método de 4 parâmetros com um valor padrão para o stock (0)
         adicionarBundle(produtos, preco, 0, tipo);
     }
 
     // Método original que aceita 4 parâmetros (com stock)
-    private void adicionarBundle(String produtos, double preco, int stock, String tipo) {
-        Object[] linha = {produtos, preco, stock, tipo};
+    public void adicionarBundle(String produtos, double preco, int stock, String tipo) {
+        Object[] linha = {produtos, String.format("%.2f", preco).replace(".", ","), stock, tipo};
         tableModelBundles.addRow(linha);
     }
 }
