@@ -10,8 +10,8 @@ public class barMainPage extends JFrame {
     private JButton registarNovoStockButton;
     private JButton editarProdutoButton;
     private JButton criarBundleButton;
+    private JButton removerBundleButton;
     private JTable table2;
-    private JButton removerStockButton;
     private DefaultTableModel tableModelProdutos;
     private DefaultTableModel tableModelBundles;
     private DadosRestauracao dadosRestauracao;
@@ -61,7 +61,7 @@ public class barMainPage extends JFrame {
         });
 
         registarNovoStockButton.addActionListener(e -> {
-            new adicionarStock("Adicionar stock");
+            new GerirStock(this);
         });
 
         editarProdutoButton.addActionListener(e -> {
@@ -72,8 +72,31 @@ public class barMainPage extends JFrame {
             new criarbundle("Criar bundle", this);
         });
 
-        removerStockButton.addActionListener(e -> {
-            new removerStock(this);
+        removerBundleButton.addActionListener(e -> {
+            int selectedRow = table2.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this,
+                    "Por favor, selecione um bundle para remover.",
+                    "Nenhum bundle selecionado",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String bundleString = (String) table2.getValueAt(selectedRow, 0);
+            int option = JOptionPane.showConfirmDialog(this,
+                "Tem certeza que deseja remover o bundle:\n" + bundleString + "?",
+                "Confirmar remoção",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+            if (option == JOptionPane.YES_OPTION) {
+                dadosRestauracao.removerBundle(bundleString);
+                atualizarTabela();
+                JOptionPane.showMessageDialog(this,
+                    "Bundle removido com sucesso!",
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
         });
     }
 

@@ -28,7 +28,9 @@ public class MenuPage extends JFrame {
 
         salasButton.addActionListener(e -> new SalasMainPage());
         sessoesButton.addActionListener(e -> new SessoesMainPage());
-        vendasButton.addActionListener(e -> new vendasMainPage());
+        vendasButton.addActionListener(e -> {
+            vendasMainPage.getInstance().setVisible(true);
+        });
         barButton.addActionListener(e -> new barMainPage());
         filmesButton.addActionListener(e -> new FilmesMainPage());
         statsButton.addActionListener(e -> new statsMainPage());

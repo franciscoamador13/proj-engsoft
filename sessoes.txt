@@ -1,0 +1,2 @@
+teste|20/02/2003|16:16|Sala 3|true
+teste|20/05/2001|17:21|sala 2|true

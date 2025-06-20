@@ -18,7 +18,7 @@ public class HomePage extends JFrame {
         });
 
         quioskButton.addActionListener(e -> {
-            new QuioskPage();
+            QuioskPage.getInstance().setVisible(true);
         });
     }
 

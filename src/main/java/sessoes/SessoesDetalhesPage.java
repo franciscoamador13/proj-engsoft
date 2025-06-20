@@ -6,25 +6,50 @@ public class SessoesDetalhesPage extends JFrame {
 
     private JPanel sessoesDetalhesPage;
     private JButton editarButton;
-    private JCheckBox checkBox1;
-    private JLabel filme_title;
-    private JLabel hora_data;
-    private JLabel sala;
+    private JButton voltarButton;
+    private JCheckBox ativaCheckBox;
+    private JLabel filmeTitleLabel;
+    private JLabel dataHoraLabel;
+    private JLabel salaLabel;
 
-    public SessoesDetalhesPage(JLabel title_sessao1, JLabel data1, JLabel filme1) {
-        super("Detalhes da Sessão " + title_sessao1.getText() + " - " + filme1.getText());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    private DadosSessoes dadosSessoes;
+    private String currentTitulo;
+    private String currentData;
+    private String currentHora;
+    private String currentSala;
+
+    public SessoesDetalhesPage(String titulo, String data, String hora, String sala) {
+        super("Detalhes da Sessão");
+        this.currentTitulo = titulo;
+        this.currentData = data;
+        this.currentHora = hora;
+        this.currentSala = sala;
+        
+        dadosSessoes = DadosSessoes.getInstance();
         setContentPane(sessoesDetalhesPage);
-        pack();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(true);
 
-        // Adiciona os valores dos parâmetros nos labels
-        filme_title.setText(filme1.getText());
-        hora_data.setText(data1.getText());
+        // Load session data
+        Sessao sessao = dadosSessoes.getSessao(titulo, data, hora, sala);
+        if (sessao != null) {
+            filmeTitleLabel.setText(sessao.getTitulo());
+            dataHoraLabel.setText(sessao.getData() + " " + sessao.getHora());
+            salaLabel.setText(sessao.getSala());
+            ativaCheckBox.setSelected(sessao.isAtiva());
+        }
 
+        // Setup event handlers
         editarButton.addActionListener(e -> {
-            new SessoesEditarPage(title_sessao1, data1, filme1);
+            new SessoesEditarPage(titulo, data, hora, sala);
+            dispose();
         });
+
+        voltarButton.addActionListener(e -> {
+            dispose();
+        });
+
+        pack();
+        setVisible(true);
     }
 }

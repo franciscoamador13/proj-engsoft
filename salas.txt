@@ -1,1 +1,2 @@
-Sala 3|3D|70–75 dB|5|4|false|
+Sala 3|3D|70–75 dB|5|4|true|D2
+sala 2|3D|60 dB|10|10|true|B5,D5,F6,G2,G8,H9,I3,I6
