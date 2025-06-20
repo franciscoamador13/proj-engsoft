@@ -22,6 +22,10 @@ public class QuioskPage extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(quioskPage);
 
+        // Criar grupo de botões para os radio buttons
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(bilheteNormalRadioButton);
+        buttonGroup.add(bilheteComDescontoRadioButton);
 
         DefaultComboBoxModel<String> descontoModel = new DefaultComboBoxModel<>();
         descontoModel.addElement("Desconto sénior +65 - 8€");
