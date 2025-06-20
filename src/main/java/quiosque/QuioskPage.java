@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.awt.Component;
 
 public class QuioskPage extends JFrame {
     private static QuioskPage instance = null;
@@ -310,7 +311,7 @@ public class QuioskPage extends JFrame {
             }
         }
 
-        // Carregar bundles e esconder a lista se não houver bundles disponíveis
+        // Carregar bundles e esconder a seção se não houver bundles disponíveis
         List<Bundle> availableBundles = dadosRestauracao.getBundles();
         boolean hasBundles = false;
         for (Bundle bundle : availableBundles) {
@@ -319,7 +320,33 @@ public class QuioskPage extends JFrame {
                 hasBundles = true;
             }
         }
+        
+        // Hide or show the bundles section
         list3.setVisible(hasBundles);
+        // Find and hide/show the bundles label and scrollpane
+        Component[] components = quioskPage.getComponents();
+        for (Component component : components) {
+            if (component instanceof JPanel) {
+                JPanel panel = (JPanel) component;
+                Component[] panelComponents = panel.getComponents();
+                for (Component panelComponent : panelComponents) {
+                    // Hide/show the bundles label
+                    if (panelComponent instanceof JLabel) {
+                        JLabel label = (JLabel) panelComponent;
+                        if (label.getText().equals("Bundles")) {
+                            label.setVisible(hasBundles);
+                        }
+                    }
+                    // Hide/show the scrollpane containing the bundles list
+                    if (panelComponent instanceof JScrollPane) {
+                        JScrollPane scrollPane = (JScrollPane) panelComponent;
+                        if (scrollPane.getViewport().getView() == list3) {
+                            scrollPane.setVisible(hasBundles);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void escolherLugar() {

@@ -68,7 +68,36 @@ public class SeatSelectionPage extends JFrame {
         titleLabel = new JLabel("Selecione o seu lugar - Sala " + sala.getNomeSala());
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        mainPanel.add(titleLabel, BorderLayout.NORTH);
+        
+        // Create a panel for title and legend
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(titleLabel, BorderLayout.NORTH);
+        
+        // Legend panel
+        JPanel legendPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        legendPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+
+        JLabel regularLabel = new JLabel("Regular");
+        JLabel accessibleLabel = new JLabel("Acessível");
+
+        JPanel regularColor = new JPanel();
+        regularColor.setPreferredSize(new Dimension(20, 20));
+        regularColor.setBackground(new Color(220, 220, 220));
+        regularColor.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        JPanel accessibleColor = new JPanel();
+        accessibleColor.setPreferredSize(new Dimension(20, 20));
+        accessibleColor.setBackground(new Color(173, 216, 230));
+        accessibleColor.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        legendPanel.add(regularColor);
+        legendPanel.add(regularLabel);
+        legendPanel.add(Box.createHorizontalStrut(20));
+        legendPanel.add(accessibleColor);
+        legendPanel.add(accessibleLabel);
+        
+        topPanel.add(legendPanel, BorderLayout.CENTER);
+        mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // Grid Panel
         gridPanel = new JPanel();

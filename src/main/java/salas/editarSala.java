@@ -149,49 +149,117 @@ public class editarSala extends JFrame {
                 return;
             }
 
-            JFrame janela = new JFrame("Selecionar Lugares Acessíveis");
-            janela.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            JDialog janela = new JDialog(this, "Selecionar Lugares Acessíveis", true);
+            janela.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-            JPanel painelBotoes = new JPanel(new GridLayout(linhas, colunas, 5, 5));
+            // Main panel with BorderLayout
+            JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+            mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+            // Title
+            JLabel titleLabel = new JLabel("Selecione os lugares acessíveis");
+            titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+            titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            mainPanel.add(titleLabel, BorderLayout.NORTH);
+
+            // Grid panel for seats
+            JPanel gridPanel = new JPanel(new GridLayout(linhas, colunas, 5, 5));
+            List<JToggleButton> seatButtons = new ArrayList<>();
 
             for (int i = 0; i < linhas; i++) {
                 for (int j = 0; j < colunas; j++) {
-                    String posicao = (char)('A' + i) + "" + (j + 1);
-                    JToggleButton botao = new JToggleButton(posicao);
-                    botao.setSelected(lugaresAcessiveis.contains(posicao));
+                    final String seatId = String.format("%c%d", (char)('A' + i), j + 1);
+                    JToggleButton seatButton = new JToggleButton(seatId);
+                    seatButton.setPreferredSize(new Dimension(50, 50));
+                    seatButton.setFont(new Font("Arial", Font.PLAIN, 12));
+                    
+                    // Set initial state
+                    boolean isSelected = lugaresAcessiveis.contains(seatId);
+                    seatButton.setSelected(isSelected);
+                    seatButton.setBackground(isSelected ? new Color(173, 216, 230) : new Color(220, 220, 220));
 
-                    botao.addActionListener(e -> {
-                        if (botao.isSelected()) {
-                            if (!lugaresAcessiveis.contains(posicao)) lugaresAcessiveis.add(posicao);
+                    seatButton.addActionListener(e -> {
+                        boolean selected = seatButton.isSelected();
+                        seatButton.setBackground(selected ? new Color(173, 216, 230) : new Color(220, 220, 220));
+                        if (selected) {
+                            if (!lugaresAcessiveis.contains(seatId)) {
+                                lugaresAcessiveis.add(seatId);
+                            }
                         } else {
-                            lugaresAcessiveis.remove(posicao);
+                            lugaresAcessiveis.remove(seatId);
                         }
                     });
 
-                    painelBotoes.add(botao);
+                    seatButtons.add(seatButton);
+                    gridPanel.add(seatButton);
                 }
             }
 
-            JPanel painelControle = new JPanel(new FlowLayout());
+            // Add grid panel to a scroll pane
+            JScrollPane scrollPane = new JScrollPane(gridPanel);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            mainPanel.add(scrollPane, BorderLayout.CENTER);
+
+            // Button panel
+            JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
             JButton btnConfirmar = new JButton("Confirmar");
             JButton btnCancelar = new JButton("Cancelar");
 
+            // Style buttons
+            btnConfirmar.setPreferredSize(new Dimension(120, 40));
+            btnCancelar.setPreferredSize(new Dimension(120, 40));
+            btnConfirmar.setFont(new Font("Arial", Font.PLAIN, 14));
+            btnCancelar.setFont(new Font("Arial", Font.PLAIN, 14));
+
             btnConfirmar.addActionListener(e -> {
                 janela.dispose();
-                String msg = lugaresAcessiveis.isEmpty() ? "Nenhum lugar acessível foi selecionado." :
-                        "Lugares acessíveis selecionados:\n" + String.join(", ", lugaresAcessiveis);
-                JOptionPane.showMessageDialog(this, msg, "Lugares Selecionados", JOptionPane.INFORMATION_MESSAGE);
+                if (!lugaresAcessiveis.isEmpty()) {
+                    lugaresAcessiveis.sort((a, b) -> {
+                        if (a.charAt(0) != b.charAt(0)) return Character.compare(a.charAt(0), b.charAt(0));
+                        return Integer.compare(Integer.parseInt(a.substring(1)), Integer.parseInt(b.substring(1)));
+                    });
+                    String msg = "Lugares acessíveis selecionados:\n" + String.join(", ", lugaresAcessiveis);
+                    JOptionPane.showMessageDialog(this, msg, "Lugares Selecionados", JOptionPane.INFORMATION_MESSAGE);
+                }
             });
 
-            btnCancelar.addActionListener(e -> janela.dispose());
+            btnCancelar.addActionListener(e -> {
+                lugaresAcessiveis.clear();
+                janela.dispose();
+            });
 
-            painelControle.add(btnConfirmar);
-            painelControle.add(btnCancelar);
+            buttonPanel.add(btnConfirmar);
+            buttonPanel.add(btnCancelar);
+            mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-            janela.setLayout(new BorderLayout());
-            janela.add(painelBotoes, BorderLayout.CENTER);
-            janela.add(painelControle, BorderLayout.SOUTH);
+            // Legend panel
+            JPanel legendPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+            legendPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
+            JLabel regularLabel = new JLabel("Regular");
+            JLabel accessibleLabel = new JLabel("Acessível");
+
+            JPanel regularColor = new JPanel();
+            regularColor.setPreferredSize(new Dimension(20, 20));
+            regularColor.setBackground(new Color(220, 220, 220));
+            regularColor.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+            JPanel accessibleColor = new JPanel();
+            accessibleColor.setPreferredSize(new Dimension(20, 20));
+            accessibleColor.setBackground(new Color(173, 216, 230));
+            accessibleColor.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+            legendPanel.add(regularColor);
+            legendPanel.add(regularLabel);
+            legendPanel.add(Box.createHorizontalStrut(20));
+            legendPanel.add(accessibleColor);
+            legendPanel.add(accessibleLabel);
+
+            mainPanel.add(legendPanel, BorderLayout.NORTH);
+
+            janela.setContentPane(mainPanel);
+            janela.setMinimumSize(new Dimension(600, 500));
             janela.pack();
             janela.setLocationRelativeTo(this);
             janela.setVisible(true);
