@@ -1,0 +1,2 @@
+teste|nao sei|12|20-20-20|ola|false
+123|3123|13212|123123|teste|true
