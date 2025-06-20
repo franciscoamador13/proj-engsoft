@@ -72,7 +72,7 @@ public class DadosRestauracao {
         }
     }
 
-    private void gravarDados() {
+    public void gravarDados() {
         gravarProdutos();
         gravarBundles();
     }
@@ -229,5 +229,12 @@ public class DadosRestauracao {
     public void limparBundles() {
         bundles.clear();
         gravarDados();
+    }
+
+    public Produto getProdutoPorNome(String nome) {
+        return produtos.stream()
+                .filter(p -> p.getNome().equals(nome))
+                .findFirst()
+                .orElse(null);
     }
 } 

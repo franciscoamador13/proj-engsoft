@@ -1,7 +1,6 @@
 package restauracao;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
@@ -14,7 +13,6 @@ public class criarbundle extends JFrame {
     private DadosRestauracao dadosRestauracao;
     private barMainPage mainPage;
     private DefaultListModel<String> listModel;
-    private JLabel instrucoes;
 
     public criarbundle(String title, barMainPage mainPage) {
         super(title);
@@ -38,14 +36,6 @@ public class criarbundle extends JFrame {
         // Adicionar bordas aos campos
         textField1.setBorder(BorderFactory.createTitledBorder("Preço"));
         textField2.setBorder(BorderFactory.createTitledBorder("Tipo"));
-        
-        // Configurar instruções
-        instrucoes = new JLabel("<html><b>Instruções:</b><br/>" +
-                              "• Use Ctrl + Clique para selecionar vários produtos<br/>" +
-                              "• Use Shift + Clique para selecionar um intervalo<br/>" +
-                              "• Use vírgula para decimais no preço</html>");
-        instrucoes.setForeground(Color.DARK_GRAY);
-        instrucoes.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         
         // Adicionar listener ao botão
         criarNovoBundleButton.addActionListener(e -> criarBundle());
@@ -110,22 +100,5 @@ public class criarbundle extends JFrame {
 
     private void showError(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
-    }
-
-    private void createUIComponents() {
-        // Criar o painel principal
-        criarBundlePage = new JPanel(new BorderLayout());
-        
-        // Criar o painel de instruções no topo
-        JPanel topPanel = new JPanel(new BorderLayout());
-        instrucoes = new JLabel("<html><b>Instruções:</b><br/>" +
-                              "• Use Ctrl + Clique para selecionar vários produtos<br/>" +
-                              "• Use Shift + Clique para selecionar um intervalo<br/>" +
-                              "• Use vírgula para decimais no preço</html>");
-        instrucoes.setForeground(Color.DARK_GRAY);
-        instrucoes.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        topPanel.add(instrucoes, BorderLayout.CENTER);
-        
-        criarBundlePage.add(topPanel, BorderLayout.NORTH);
     }
 }

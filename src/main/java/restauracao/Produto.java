@@ -17,6 +17,10 @@ public class Produto {
         return nome;
     }
     
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
     public double getPreco() {
         return preco;
     }

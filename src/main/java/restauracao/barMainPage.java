@@ -100,4 +100,30 @@ public class barMainPage extends JFrame {
         Object[] linha = {produtos, String.format("%.2f", preco).replace(".", ","), stock, tipo};
         tableModelBundles.addRow(linha);
     }
+
+    public void atualizarTabela() {
+        // Limpar as tabelas
+        tableModelProdutos.setRowCount(0);
+        tableModelBundles.setRowCount(0);
+
+        // Recarregar produtos
+        for (Produto produto : dadosRestauracao.getProdutos()) {
+            adicionarProduto(
+                produto.getNome(),
+                produto.getPreco(),
+                produto.getStock(),
+                produto.getTipo()
+            );
+        }
+
+        // Recarregar bundles
+        for (Bundle bundle : dadosRestauracao.getBundles()) {
+            adicionarBundle(
+                bundle.getProdutosString(),
+                bundle.getPreco(),
+                bundle.getStockAgrupado(dadosRestauracao),
+                bundle.getTipo()
+            );
+        }
+    }
 }
