@@ -9,15 +9,27 @@ public class Filme {
     private boolean ativo;
 
     public Filme(String tipo, String realizacao, String duracao, String dataLancamento, String titulo) {
+        validarTipo(tipo);
+        validarRealizacao(realizacao);
+        validarDuracao(duracao);
+        validarDataLancamento(dataLancamento);
+        validarTitulo(titulo);
+
         this.tipo = tipo;
         this.realizacao = realizacao;
         this.duracao = duracao;
         this.dataLancamento = dataLancamento;
         this.titulo = titulo;
-        this.ativo = true; // By default, new movies are active
+        this.ativo = true;
     }
 
     public Filme(String tipo, String realizacao, String duracao, String dataLancamento, String titulo, boolean ativo) {
+        validarTipo(tipo);
+        validarRealizacao(realizacao);
+        validarDuracao(duracao);
+        validarDataLancamento(dataLancamento);
+        validarTitulo(titulo);
+
         this.tipo = tipo;
         this.realizacao = realizacao;
         this.duracao = duracao;
@@ -26,11 +38,13 @@ public class Filme {
         this.ativo = ativo;
     }
 
+    // Getters e Setters com validações nos setters
     public String getTipo() {
         return tipo;
     }
 
     public void setTipo(String tipo) {
+        validarTipo(tipo);
         this.tipo = tipo;
     }
 
@@ -39,6 +53,7 @@ public class Filme {
     }
 
     public void setRealizacao(String realizacao) {
+        validarRealizacao(realizacao);
         this.realizacao = realizacao;
     }
 
@@ -47,6 +62,7 @@ public class Filme {
     }
 
     public void setDuracao(String duracao) {
+        validarDuracao(duracao);
         this.duracao = duracao;
     }
 
@@ -55,6 +71,7 @@ public class Filme {
     }
 
     public void setDataLancamento(String dataLancamento) {
+        validarDataLancamento(dataLancamento);
         this.dataLancamento = dataLancamento;
     }
 
@@ -63,6 +80,7 @@ public class Filme {
     }
 
     public void setTitulo(String titulo) {
+        validarTitulo(titulo);
         this.titulo = titulo;
     }
 
@@ -85,4 +103,35 @@ public class Filme {
                 ", ativo=" + ativo +
                 '}';
     }
-} 
+
+    //Validações para os atributos
+    private void validarTitulo(String titulo) {
+        if (titulo == null || titulo.trim().isEmpty()) {
+            throw new IllegalArgumentException("Título não pode ser nulo ou vazio");
+        }
+    }
+
+    private void validarTipo(String tipo) {
+        if (tipo == null || tipo.trim().isEmpty()) {
+            throw new IllegalArgumentException("Tipo não pode ser nulo ou vazio");
+        }
+    }
+
+    private void validarRealizacao(String realizacao) {
+        if (realizacao == null || realizacao.trim().isEmpty()) {
+            throw new IllegalArgumentException("Realização não pode ser nula ou vazia");
+        }
+    }
+
+    private void validarDuracao(String duracao) {
+        if (duracao == null || duracao.trim().isEmpty()) {
+            throw new IllegalArgumentException("Duração não pode ser nula ou vazia");
+        }
+    }
+
+    private void validarDataLancamento(String dataLancamento) {
+        if (dataLancamento == null || dataLancamento.trim().isEmpty()) {
+            throw new IllegalArgumentException("Data de lançamento não pode ser nula ou vazia");
+        }
+    }
+}
