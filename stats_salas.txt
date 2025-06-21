@@ -1,0 +1,3 @@
+Sala A1; 1251
+Sala A2; 5124
+Sala A3; 6142

@@ -1,0 +1,4 @@
+Ação;1251
+Aventura;121251
+Sci-Fi;73321
+Drama;85751
