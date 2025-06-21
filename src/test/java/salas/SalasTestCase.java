@@ -64,13 +64,13 @@ public class SalasTestCase {
         assert !sala.isAcessivelCadeirantes();
         assert sala.getLugaresAcessiveis().isEmpty();
 
-        // Testar toString sem acessibilidade
+
         String expected = "Sala Básica - 2D (6x8) - 60 dB";
         assert sala.toString().equals(expected);
 
-        // Mesmo adicionando lugares acessíveis, não devem aparecer no toString se acessivelCadeirantes é false
+
         sala.getLugaresAcessiveis().add("C3");
-        assert sala.toString().equals(expected); // Deve manter o mesmo resultado
+        assert sala.toString().equals(expected);
     }
 
     @Test
@@ -78,17 +78,17 @@ public class SalasTestCase {
         var sala1 = new Sala("Cinema 1", "2D", "60 dB", 10, 12, false);
         var sala2 = new Sala("Cinema 1", "IMAX", "115 dB", 20, 25, true);
 
-        // Mesmo nome, mas especificações diferentes
+
         assert sala1.getNomeSala().equals(sala2.getNomeSala());
 
-        // Verificar que as outras propriedades são diferentes
+        
         assert !sala1.getNivelProjecao().equals(sala2.getNivelProjecao());
         assert !sala1.getNivelSom().equals(sala2.getNivelSom());
         assert sala1.getLinhas() != sala2.getLinhas();
         assert sala1.getColunas() != sala2.getColunas();
         assert sala1.isAcessivelCadeirantes() != sala2.isAcessivelCadeirantes();
 
-        // Verificar toString diferentes
+
         assert !sala1.toString().equals(sala2.toString());
     }
 }
