@@ -51,6 +51,14 @@ public class consultarFatura extends JFrame {
     private void carregarFaturas() {
         tableModel.setRowCount(0);
 
+        if (dadosFaturas.getFaturas().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Não Existem Faturas",
+                    "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
         for (Fatura fatura : dadosFaturas.getFaturas()) {
             Object[] linha = {
                     fatura.getNumeroFatura(),
