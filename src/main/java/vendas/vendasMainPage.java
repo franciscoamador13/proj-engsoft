@@ -25,7 +25,7 @@ public class vendasMainPage extends JFrame {
         setContentPane(vendasMainPage);
 
         // Configurar a tabela
-        String[] colunas = {"Condição", "Valor (%)"};
+        String[] colunas = {"Condição", "Valor (€)"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {

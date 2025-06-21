@@ -124,7 +124,7 @@ public class QuioskPage extends JFrame {
         }
 
         comboBox1.setModel(descontoModel);
-        comboBox1.setEnabled(false);
+        comboBox1.setEnabled(true);
         comboBox1.setVisible(!dadosVendas.getDescontos().isEmpty());
 
         // Add action listener to update subtotal when discount changes
