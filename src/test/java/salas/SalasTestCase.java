@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SalasTestCase {
 
     @Test
-    public void testCreateSala_valid() {
+    public void testValidarCriarSala() {
         var sala = new Sala("Sala Premium", "IMAX", "90–105 dB", 15, 20, true);
 
         assert sala.getNomeSala().equals("Sala Premium");
@@ -21,10 +21,9 @@ public class SalasTestCase {
     }
 
     @Test
-    public void testCreateSala_withAccessibleSeats() {
+    public void testCriarSalaComCadeirassacessiveis() {
         var sala = new Sala("Sala VIP", "3D", "75–80 dB", 10, 12, true);
 
-        // Adicionar lugares acessíveis
         sala.getLugaresAcessiveis().addAll(Arrays.asList("A1", "A2", "B1", "B2"));
 
         assert sala.isAcessivelCadeirantes();
@@ -32,24 +31,22 @@ public class SalasTestCase {
         assert sala.getLugaresAcessiveis().contains("A1");
         assert sala.getLugaresAcessiveis().contains("B2");
 
-        // Testar toString com lugares acessíveis
         String expected = "Sala VIP - 3D (10x12) - 75–80 dB [Lugares Acessíveis: A1, A2, B1, B2]";
         assert sala.toString().equals(expected);
     }
 
     @Test
-    public void testUpdateSala_valid() {
+    public void testvalidarEditarSala() {
         var sala = new Sala("Sala Standard", "2D", "60 dB", 8, 10, false);
 
-        // Atualizar propriedades
-        sala.setNomeSala("Sala Renovada");
+        sala.setNomeSala("Sala Atualizada");
         sala.setNivelProjecao("3D");
         sala.setNivelSom("70–75 dB");
         sala.setLinhas(12);
         sala.setColunas(15);
         sala.setAcessivelCadeirantes(true);
 
-        assert sala.getNomeSala().equals("Sala Renovada");
+        assert sala.getNomeSala().equals("Sala Atualizada");
         assert sala.getNivelProjecao().equals("3D");
         assert sala.getNivelSom().equals("70–75 dB");
         assert sala.getLinhas() == 12;
@@ -58,7 +55,7 @@ public class SalasTestCase {
     }
 
     @Test
-    public void testSalaWithoutAccessibility() {
+    public void testSalaComAcessibilidade() {
         var sala = new Sala("Sala Básica", "2D", "60 dB", 6, 8, false);
 
         assert !sala.isAcessivelCadeirantes();
@@ -74,21 +71,34 @@ public class SalasTestCase {
     }
 
     @Test
-    public void testSalasWithSameName_differentSpecs() {
-        var sala1 = new Sala("Cinema 1", "2D", "60 dB", 10, 12, false);
-        var sala2 = new Sala("Cinema 1", "IMAX", "115 dB", 20, 25, true);
+    public void testSalaAtivacaoAcessibilidade() {
+        var sala = new Sala("Sala Flexível", "3D", "75–80 dB", 8, 10, true);
+
+        assert sala.isAcessivelCadeirantes();
+
+        sala.getLugaresAcessiveis().addAll(Arrays.asList("A1", "A2", "H9", "H10"));
+        assert sala.getLugaresAcessiveis().size() == 4;
+
+        String toStringComAcessibilidade = sala.toString();
+        assert toStringComAcessibilidade.contains("Lugares Acessíveis");
+        assert toStringComAcessibilidade.contains("A1, A2, H9, H10");
 
 
-        assert sala1.getNomeSala().equals(sala2.getNomeSala());
-
-        
-        assert !sala1.getNivelProjecao().equals(sala2.getNivelProjecao());
-        assert !sala1.getNivelSom().equals(sala2.getNivelSom());
-        assert sala1.getLinhas() != sala2.getLinhas();
-        assert sala1.getColunas() != sala2.getColunas();
-        assert sala1.isAcessivelCadeirantes() != sala2.isAcessivelCadeirantes();
+        sala.setAcessivelCadeirantes(false);
+        assert !sala.isAcessivelCadeirantes();
 
 
-        assert !sala1.toString().equals(sala2.toString());
+        String toStringSemAcessibilidade = sala.toString();
+        assert !toStringSemAcessibilidade.contains("Lugares Acessíveis");
+        assert !toStringSemAcessibilidade.contains("A1, A2, H9, H10");
+
+
+        assert sala.getLugaresAcessiveis().size() == 4;
+
+
+        sala.setAcessivelCadeirantes(true);
+        String toStringReativado = sala.toString();
+        assert toStringReativado.contains("Lugares Acessíveis");
+        assert toStringReativado.contains("A1, A2, H9, H10");
     }
 }
