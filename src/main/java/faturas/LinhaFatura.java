@@ -13,7 +13,7 @@ public class LinhaFatura {
         this.subtotal = precoUnitario * quantidade;
     }
 
-    // Getters
+
     public String getDescricao() {
         return descricao;
     }
@@ -30,7 +30,7 @@ public class LinhaFatura {
         return subtotal;
     }
 
-    // Setters (caso precise alterar quantidade ou preço)
+
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
         this.subtotal = this.precoUnitario * quantidade;

@@ -21,20 +21,17 @@ public class verFatura extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(verFaturaPage);
 
-        // Configurar tabela
         String[] colunas = {"Produto", "Preço Unitário", "Quantidade", "Subtotal"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Torna a tabela não editável
+                return false;
             }
         };
         table1.setModel(tableModel);
 
-        // Preencher campos com dados da fatura
         preencherCampos(fatura);
 
-        // Preencher tabela com linhas da fatura
         preencherTabela(fatura);
 
         pack();
@@ -43,8 +40,6 @@ public class verFatura extends JFrame {
     }
 
     private void preencherCampos(Fatura fatura) {
-        // Assumindo que você tem um campo para número da fatura
-        // Se não tiver, pode remover esta linha
         if (numeroFaturaField != null) {
             numeroFaturaField.setText(fatura.getNumeroFatura());
         }
@@ -57,7 +52,6 @@ public class verFatura extends JFrame {
         dataField.setText(fatura.getData());
         totalField.setText(String.format("%.2f€", fatura.getTotal()));
 
-        // Tornar todos os campos não editáveis
         nrClienteField.setEditable(false);
         nifField.setEditable(false);
         idadeField.setEditable(false);
@@ -71,10 +65,8 @@ public class verFatura extends JFrame {
     }
 
     private void preencherTabela(Fatura fatura) {
-        // Limpar tabela
         tableModel.setRowCount(0);
 
-        // Adicionar cada linha da fatura à tabela
         for (LinhaFatura linha : fatura.getLinhas()) {
             Object[] dadosLinha = {
                     linha.getDescricao(),

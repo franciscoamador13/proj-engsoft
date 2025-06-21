@@ -19,7 +19,6 @@ public class consultarFatura extends JFrame {
 
         dadosFaturas = DadosFaturas.getInstance();
 
-        // Definir as colunas
         String[] colunas = {"Nº Fatura", "Data", "Total", "Nº Cliente", "NIF"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
@@ -29,20 +28,16 @@ public class consultarFatura extends JFrame {
         };
         table1.setModel(tableModel);
 
-        // Configurar seleção da tabela
         table1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // Carregar faturas do sistema
         carregarFaturas();
 
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
 
-        // Botão para ver fatura selecionada
         verFaturaButton.addActionListener(e -> verFaturaSelecionada());
 
-        // Double click na tabela para ver fatura
         table1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -54,10 +49,8 @@ public class consultarFatura extends JFrame {
     }
 
     private void carregarFaturas() {
-        // Limpar tabela
         tableModel.setRowCount(0);
 
-        // Carregar todas as faturas
         for (Fatura fatura : dadosFaturas.getFaturas()) {
             Object[] linha = {
                     fatura.getNumeroFatura(),

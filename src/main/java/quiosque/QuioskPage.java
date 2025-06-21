@@ -445,7 +445,6 @@ public class QuioskPage extends JFrame {
     }
 
     private void confirmarCompra() {
-        // Validar seleções
         if (list1.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(this,
                     "Por favor, selecione uma sessão.",
@@ -462,7 +461,6 @@ public class QuioskPage extends JFrame {
             return;
         }
 
-        // Validar NIF se fornecido
         String nif = textField1.getText().trim();
         if (!nif.isEmpty() && !nif.matches("\\d{9}")) {
             JOptionPane.showMessageDialog(this,
@@ -472,7 +470,6 @@ public class QuioskPage extends JFrame {
             return;
         }
 
-        // Validar idade se fornecida
         String idade = textField2.getText().trim();
         if (!idade.isEmpty()) {
             try {
@@ -489,7 +486,6 @@ public class QuioskPage extends JFrame {
             }
         }
 
-        // Validar que não há produto e bundle selecionados simultaneamente
         if (list2.getSelectedIndex() != -1 && list3.getSelectedIndex() != -1) {
             JOptionPane.showMessageDialog(this,
                     "Por favor, selecione apenas um produto OU um bundle, não ambos.",
@@ -499,18 +495,15 @@ public class QuioskPage extends JFrame {
         }
 
         try {
-            // Extrair informações da sessão selecionada
             String sessaoSelecionada = list1.getSelectedValue().toString();
             String[] partesSessao = sessaoSelecionada.split(" - ");
             String tituloFilme = partesSessao[0];
             String dataHoraSala = partesSessao[1];
 
-            // Extrair sala da string
             Pattern pattern = Pattern.compile("\\(Sala (.*)\\)");
             Matcher matcher = pattern.matcher(dataHoraSala);
             String sala = matcher.find() ? matcher.group(1) : "N/A";
 
-            // Criar nova fatura
             Fatura novaFatura = dadosFaturas.criarNovaFatura(
                     nif.isEmpty() ? null : nif,
                     idade.isEmpty() ? null : idade,
@@ -518,20 +511,16 @@ public class QuioskPage extends JFrame {
                     sala
             );
 
-            // Adicionar bilhete à fatura
             if (bilheteComDescontoRadioButton.isSelected() && comboBox1.getSelectedIndex() != -1) {
-                // Bilhete com desconto
                 String descontoSelecionado = comboBox1.getSelectedItem().toString();
                 String[] partesDesconto = descontoSelecionado.split(" - ");
                 String tipoDesconto = partesDesconto[0];
                 double precoDesconto = Double.parseDouble(partesDesconto[1].replace("€", "").trim());
                 novaFatura.adicionarLinhaBilhete(tipoDesconto, precoDesconto);
             } else {
-                // Bilhete normal
                 novaFatura.adicionarLinhaBilhete(null, dadosVendas.getPrecoBilhete());
             }
 
-            // Adicionar produto se selecionado
             if (list2.getSelectedValue() != null) {
                 String produtoSelecionado = list2.getSelectedValue().toString();
                 String[] partesProduto = produtoSelecionado.split(" - ");
@@ -540,7 +529,6 @@ public class QuioskPage extends JFrame {
                 novaFatura.adicionarLinha(nomeProduto, precoProduto, 1);
             }
 
-            // Adicionar bundle se selecionado
             if (list3.getSelectedValue() != null) {
                 String bundleSelecionado = list3.getSelectedValue().toString();
                 String[] partesBundle = bundleSelecionado.split(" - ");
@@ -549,10 +537,8 @@ public class QuioskPage extends JFrame {
                 novaFatura.adicionarLinha("Bundle: " + nomeBundle, precoBundle, 1);
             }
 
-            // Adicionar fatura ao sistema
             dadosFaturas.adicionarFatura(novaFatura);
 
-            // Mostrar mensagem de sucesso com número da fatura
             JOptionPane.showMessageDialog(this,
                     "Compra realizada com sucesso!\n" +
                             "Número da fatura: " + novaFatura.getNumeroFatura() + "\n" +
@@ -560,7 +546,6 @@ public class QuioskPage extends JFrame {
                     "Sucesso",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            // Opcional: Mostrar detalhes da fatura
             int opcao = JOptionPane.showConfirmDialog(this,
                     "Deseja ver os detalhes da fatura?",
                     "Ver Fatura",
@@ -581,10 +566,8 @@ public class QuioskPage extends JFrame {
             return;
         }
 
-        // Reset all data after successful purchase
         resetData();
 
-        // Reload data for new purchase
         carregarDados();
     }
 
