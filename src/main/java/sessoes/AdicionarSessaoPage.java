@@ -7,7 +7,11 @@ import salas.Sala;
 
 import javax.swing.*;
 import javax.swing.DefaultListModel;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.util.List;
+import java.util.Locale;
 
 public class AdicionarSessaoPage extends JFrame {
     private JPanel sessoesAdicionarPage;
@@ -27,17 +31,17 @@ public class AdicionarSessaoPage extends JFrame {
         super("Adicionar Sessão");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(sessoesAdicionarPage);
-        
+
         // Initialize data
         dadosFilmes = DadosFilmes.getInstance();
         dadosSalas = DadosSalas.getInstance();
-        
+
         // Setup list models
         filmesListModel = new DefaultListModel<>();
         salasListModel = new DefaultListModel<>();
         filmesListBox.setModel(filmesListModel);
         salasListBox.setModel(salasListModel);
-        
+
         // Load data
         carregarFilmes();
         carregarSalas();
@@ -118,4 +122,5 @@ public class AdicionarSessaoPage extends JFrame {
         dataHoraTextField.setText("");
         sessaoAtivaCheckBox.setSelected(true);
     }
+
 }

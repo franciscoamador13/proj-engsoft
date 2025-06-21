@@ -1,8 +1,11 @@
 package vendas;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
 
 public class editarDesconto extends JDialog {
     private static editarDesconto instance = null;
@@ -66,11 +69,11 @@ public class editarDesconto extends JDialog {
             DadosVendas dadosVendas = DadosVendas.getInstance();
             double precoBilhete = dadosVendas.getPrecoBilhete();
             if (novoValor >= precoBilhete) {
-                JOptionPane.showMessageDialog(this, 
-                    String.format("O valor do desconto (%.2f€) não pode ser maior ou igual ao preço do bilhete (%.2f€)!", 
-                    novoValor, precoBilhete), 
-                    "Erro", 
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        String.format("O valor do desconto (%.2f€) não pode ser maior ou igual ao preço do bilhete (%.2f€)!",
+                                novoValor, precoBilhete),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -107,4 +110,5 @@ public class editarDesconto extends JDialog {
             dispose();
         }
     }
+
 }

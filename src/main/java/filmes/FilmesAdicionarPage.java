@@ -1,6 +1,10 @@
 package filmes;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.util.Locale;
 
 public class FilmesAdicionarPage extends JFrame {
     private JPanel filmesAdicionarPage;
@@ -18,10 +22,10 @@ public class FilmesAdicionarPage extends JFrame {
         super("Adicionar Filme");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(filmesAdicionarPage);
-        
+
         dadosFilmes = DadosFilmes.getInstance();
         setupButtons();
-        
+
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -38,9 +42,9 @@ public class FilmesAdicionarPage extends JFrame {
 
                 if (dadosFilmes.existeFilme(titulo)) {
                     JOptionPane.showMessageDialog(this,
-                        "Já existe um filme com este título!",
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE);
+                            "Já existe um filme com este título!",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -49,16 +53,16 @@ public class FilmesAdicionarPage extends JFrame {
                     dadosFilmes.adicionarFilme(novoFilme);
 
                     JOptionPane.showMessageDialog(this,
-                        "Filme adicionado com sucesso!",
-                        "Sucesso",
-                        JOptionPane.INFORMATION_MESSAGE);
+                            "Filme adicionado com sucesso!",
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE);
 
                     dispose();
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this,
-                        "Erro ao adicionar filme: " + ex.getMessage(),
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE);
+                            "Erro ao adicionar filme: " + ex.getMessage(),
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -97,9 +101,9 @@ public class FilmesAdicionarPage extends JFrame {
 
     private void mostrarErro(String mensagem) {
         JOptionPane.showMessageDialog(this,
-            mensagem,
-            "Erro",
-            JOptionPane.ERROR_MESSAGE);
+                mensagem,
+                "Erro",
+                JOptionPane.ERROR_MESSAGE);
     }
 
     private void limparCampos() {
@@ -110,4 +114,5 @@ public class FilmesAdicionarPage extends JFrame {
         dataLancamentoField.setText("");
         tituloField.requestFocus();
     }
+
 }

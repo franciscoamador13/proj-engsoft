@@ -1,9 +1,12 @@
 package salas;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AdicionarNovasSalas extends JFrame {
     private JButton confirmarButton, cancelarButton, botaoAcessibilidade;
@@ -130,11 +133,11 @@ public class AdicionarNovasSalas extends JFrame {
 
             for (int i = 0; i < linhas; i++) {
                 for (int j = 0; j < colunas; j++) {
-                    final String seatId = String.format("%c%d", (char)('A' + i), j + 1);
+                    final String seatId = String.format("%c%d", (char) ('A' + i), j + 1);
                     JToggleButton seatButton = new JToggleButton(seatId);
                     seatButton.setPreferredSize(new Dimension(50, 50));
                     seatButton.setFont(new Font("Arial", Font.PLAIN, 12));
-                    
+
                     // Set initial state
                     boolean isSelected = lugaresAcessiveis.contains(seatId);
                     seatButton.setSelected(isSelected);
@@ -234,4 +237,5 @@ public class AdicionarNovasSalas extends JFrame {
     private void showError(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
     }
+
 }

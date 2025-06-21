@@ -27,7 +27,7 @@
           </component>
         </children>
       </scrollpane>
-      <grid id="35163" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="10">
+      <grid id="35163" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="10">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -44,7 +44,7 @@
               <text value="Cliente nº"/>
             </properties>
           </component>
-          <component id="aef61" class="javax.swing.JTextField" binding="a001TextField" default-binding="true">
+          <component id="aef61" class="javax.swing.JTextField" binding="nrClienteField">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="200" height="30"/>
@@ -53,7 +53,7 @@
             </constraints>
             <properties>
               <font size="14"/>
-              <text value="001"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="85725" class="javax.swing.JLabel">
@@ -83,7 +83,7 @@
               <text value="Sessão"/>
             </properties>
           </component>
-          <component id="591e2" class="javax.swing.JTextField" binding="a123456789TextField" default-binding="true">
+          <component id="591e2" class="javax.swing.JTextField" binding="nifField">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="200" height="30"/>
@@ -92,10 +92,10 @@
             </constraints>
             <properties>
               <font size="14"/>
-              <text value="123456789"/>
+              <text value=""/>
             </properties>
           </component>
-          <component id="e1b30" class="javax.swing.JTextField" binding="a20TextField" default-binding="true">
+          <component id="e1b30" class="javax.swing.JTextField" binding="idadeField">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="200" height="30"/>
@@ -104,10 +104,10 @@
             </constraints>
             <properties>
               <font size="14"/>
-              <text value="20"/>
+              <text value=""/>
             </properties>
           </component>
-          <component id="aa630" class="javax.swing.JTextField" binding="filmeDaAbelha19hTextField" default-binding="true">
+          <component id="aa630" class="javax.swing.JTextField" binding="sessaoField">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="200" height="30"/>
@@ -116,7 +116,7 @@
             </constraints>
             <properties>
               <font size="14"/>
-              <text value="Filme da abelha - 19h"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="a4709" class="javax.swing.JLabel">
@@ -128,7 +128,7 @@
               <text value="Sala"/>
             </properties>
           </component>
-          <component id="a902f" class="javax.swing.JTextField" binding="a2TextField" default-binding="true">
+          <component id="a902f" class="javax.swing.JTextField" binding="salaField">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="200" height="30"/>
@@ -137,8 +137,24 @@
             </constraints>
             <properties>
               <font size="14"/>
-              <text value="2"/>
+              <text value=""/>
             </properties>
+          </component>
+          <component id="c2476" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Data"/>
+            </properties>
+          </component>
+          <component id="f4862" class="javax.swing.JTextField" binding="dataField">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
           </component>
         </children>
       </grid>
@@ -151,7 +167,7 @@
           <text value="Total:"/>
         </properties>
       </component>
-      <component id="1dc80" class="javax.swing.JTextField" binding="a24€TextField" default-binding="true">
+      <component id="1dc80" class="javax.swing.JTextField" binding="totalField">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <minimum-size width="200" height="30"/>

@@ -1,8 +1,11 @@
 package vendas;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
 
 public class alterarPrecoBilhete extends JDialog {
     private static alterarPrecoBilhete instance = null;
@@ -52,7 +55,7 @@ public class alterarPrecoBilhete extends JDialog {
 
             DadosVendas dadosVendas = DadosVendas.getInstance();
             dadosVendas.setPrecoBilhete(novoPreco);
-            
+
             JOptionPane.showMessageDialog(this, "Preço do bilhete alterado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         } catch (NumberFormatException ex) {
@@ -63,4 +66,5 @@ public class alterarPrecoBilhete extends JDialog {
     private void onCancel() {
         dispose();
     }
+
 }

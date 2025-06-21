@@ -1,6 +1,10 @@
 package restauracao;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.util.Locale;
 
 public class adicionarProduto extends JFrame {
 
@@ -17,13 +21,13 @@ public class adicionarProduto extends JFrame {
         super(title);
         this.mainPage = mainPage;
         this.dadosRestauracao = DadosRestauracao.getInstance(); // Obter instância do singleton
-        
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(adicionarProdutoPage);
-        
+
         // Adicionar listener ao botão
         adicionarButton.addActionListener(e -> adicionarProduto());
-        
+
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -88,4 +92,5 @@ public class adicionarProduto extends JFrame {
     private void showError(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
     }
+
 }

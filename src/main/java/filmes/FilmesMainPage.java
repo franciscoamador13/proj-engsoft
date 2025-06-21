@@ -1,7 +1,10 @@
 package filmes;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -9,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.Locale;
 
 public class FilmesMainPage extends JFrame {
     private JPanel filmesMain;
@@ -130,16 +134,17 @@ public class FilmesMainPage extends JFrame {
     private void atualizarTabela(String filtro) {
         tableModel.setRowCount(0);
         List<Filme> filmes = dadosFilmes.getFilmesFiltrados(filtro);
-        
+
         for (Filme filme : filmes) {
             tableModel.addRow(new Object[]{
-                filme.getTipo(),
-                filme.getRealizacao(),
-                filme.getDuracao(),
-                filme.getDataLancamento(),
-                filme.getTitulo(),
-                filme.isAtivo() ? "Ativo" : "Inativo"
+                    filme.getTipo(),
+                    filme.getRealizacao(),
+                    filme.getDuracao(),
+                    filme.getDataLancamento(),
+                    filme.getTitulo(),
+                    filme.isAtivo() ? "Ativo" : "Inativo"
             });
         }
     }
+
 }

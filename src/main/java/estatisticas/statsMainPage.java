@@ -1,8 +1,9 @@
 package estatisticas;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class statsMainPage extends JFrame{
+public class statsMainPage extends JFrame {
     private JButton limparButton;
     private JComboBox comboBox1;
     private JPanel statsPage;

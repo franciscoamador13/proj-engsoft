@@ -1,8 +1,11 @@
 package vendas;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
 
 public class adicionarDesconto extends JDialog {
     private static adicionarDesconto instance = null;
@@ -57,11 +60,11 @@ public class adicionarDesconto extends JDialog {
             DadosVendas dadosVendas = DadosVendas.getInstance();
             double precoBilhete = dadosVendas.getPrecoBilhete();
             if (valor >= precoBilhete) {
-                JOptionPane.showMessageDialog(this, 
-                    String.format("O valor do desconto (%.2f€) não pode ser maior ou igual ao preço do bilhete (%.2f€)!", 
-                    valor, precoBilhete), 
-                    "Erro", 
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        String.format("O valor do desconto (%.2f€) não pode ser maior ou igual ao preço do bilhete (%.2f€)!",
+                                valor, precoBilhete),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -72,10 +75,10 @@ public class adicionarDesconto extends JDialog {
 
             Desconto novoDesconto = new Desconto(condicao, valor);
             dadosVendas.adicionarDesconto(novoDesconto);
-            
+
             condicaoField.setText("");
             valorField.setText("");
-            
+
             JOptionPane.showMessageDialog(this, "Desconto adicionado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
         } catch (NumberFormatException ex) {
@@ -88,4 +91,5 @@ public class adicionarDesconto extends JDialog {
         valorField.setText("");
         dispose();
     }
+
 }

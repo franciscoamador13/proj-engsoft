@@ -1,10 +1,17 @@
 package quiosque;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+
 import restauracao.*;
 import filmes.*;
 import sessoes.*;
 import vendas.*;
+import faturas.*;
+
+import java.awt.*;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.event.WindowAdapter;
@@ -12,7 +19,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.awt.Component;
 
 public class QuioskPage extends JFrame {
     private static QuioskPage instance = null;
@@ -30,7 +36,7 @@ public class QuioskPage extends JFrame {
     private JLabel precoBilheteLabel;
     private JLabel subtotalLabel;
     private JButton refreshButton;
-    
+
     private DadosRestauracao dadosRestauracao;
     private DadosFilmes dadosFilmes;
     private DadosSessoes dadosSessoes;
@@ -38,6 +44,8 @@ public class QuioskPage extends JFrame {
     private DefaultListModel<String> sessoesListModel;
     private DefaultListModel<String> produtosListModel;
     private DefaultListModel<String> bundlesListModel;
+    private DadosFaturas dadosFaturas;
+
     private String selectedSeat;
 
     private QuioskPage() {
@@ -50,6 +58,7 @@ public class QuioskPage extends JFrame {
         dadosFilmes = DadosFilmes.getInstance();
         dadosSessoes = DadosSessoes.getInstance();
         dadosVendas = DadosVendas.getInstance();
+        dadosFaturas = DadosFaturas.getInstance();
 
         // Initialize list models
         sessoesListModel = new DefaultListModel<>();
@@ -94,14 +103,14 @@ public class QuioskPage extends JFrame {
 
         // Check if discounts are available
         boolean hasDiscounts = !dadosVendas.getDescontos().isEmpty();
-        
+
         // Always select and show bilheteNormal
         bilheteNormalRadioButton.setSelected(true);
         bilheteNormalRadioButton.setVisible(true);
-        
+
         // Only show discount option if discounts exist
         bilheteComDescontoRadioButton.setVisible(hasDiscounts);
-        
+
         // Add action listeners for radio buttons to update subtotal
         bilheteNormalRadioButton.addActionListener(e -> updateSubtotal());
         bilheteComDescontoRadioButton.addActionListener(e -> updateSubtotal());
@@ -109,15 +118,15 @@ public class QuioskPage extends JFrame {
 
     private void setupComboBox() {
         DefaultComboBoxModel<String> descontoModel = new DefaultComboBoxModel<>();
-        
+
         for (Desconto desconto : dadosVendas.getDescontos()) {
             descontoModel.addElement(String.format("%s - %.2f€", desconto.getCondicao(), desconto.getValor()));
         }
-        
+
         comboBox1.setModel(descontoModel);
         comboBox1.setEnabled(false);
         comboBox1.setVisible(!dadosVendas.getDescontos().isEmpty());
-        
+
         // Add action listener to update subtotal when discount changes
         comboBox1.addActionListener(e -> {
             if (bilheteComDescontoRadioButton.isSelected()) {
@@ -158,24 +167,24 @@ public class QuioskPage extends JFrame {
         MouseAdapter mouseAdapter = new MouseAdapter() {
             private long lastClickTime = 0;
             private int lastClickedIndex = -1;
-            
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 JList<?> list = (JList<?>) e.getSource();
                 int index = list.locationToIndex(e.getPoint());
                 long currentTime = System.currentTimeMillis();
-                
+
                 // Check if this is a double click on the same item
                 if (index == lastClickedIndex && (currentTime - lastClickTime) < 500) {
                     list.clearSelection();
                     SwingUtilities.invokeLater(() -> updateSubtotal());
                 }
-                
+
                 lastClickedIndex = index;
                 lastClickTime = currentTime;
             }
         };
-        
+
         list2.addMouseListener(mouseAdapter);
         list3.addMouseListener(mouseAdapter);
     }
@@ -190,14 +199,14 @@ public class QuioskPage extends JFrame {
         // Show fixed ticket price
         double fixedPrice = dadosVendas.getPrecoBilhete();
         precoBilheteLabel.setText(String.format("Preço do Bilhete: %.2f€", fixedPrice));
-        
+
         // Initialize subtotal with ticket price
         updateSubtotal();
     }
 
     private void updateSubtotal() {
         double total = 0.0;
-        
+
         // Add ticket price
         if (bilheteComDescontoRadioButton.isSelected() && comboBox1.isVisible() && comboBox1.getSelectedIndex() != -1) {
             // Get selected discount
@@ -215,7 +224,7 @@ public class QuioskPage extends JFrame {
             total += dadosVendas.getPrecoBilhete();
             System.out.println("Added ticket price: " + dadosVendas.getPrecoBilhete());
         }
-        
+
         // Add product price if selected
         if (list2.getSelectedValue() != null) {
             String selectedProduct = list2.getSelectedValue().toString();
@@ -231,7 +240,7 @@ public class QuioskPage extends JFrame {
                 }
             }
         }
-        
+
         // Add bundle price if selected
         if (list3.getSelectedValue() != null) {
             String selectedBundle = list3.getSelectedValue().toString();
@@ -250,9 +259,9 @@ public class QuioskPage extends JFrame {
         } else {
             System.out.println("No bundle selected");
         }
-        
+
         System.out.println("Final total: " + total);
-        
+
         // Update subtotal label
         subtotalLabel.setText(String.format("Subtotal: %.2f€", total));
     }
@@ -268,18 +277,18 @@ public class QuioskPage extends JFrame {
             if (sessao.isAtiva()) {
                 Filme filme = dadosFilmes.getFilmePorTitulo(sessao.getTitulo());
                 if (filme != null && filme.isAtivo()) {
-                    sessoesListModel.addElement(String.format("%s - %s %s (Sala %s)", 
-                        sessao.getTitulo(), 
-                        sessao.getData(), 
-                        sessao.getHora(),
-                        sessao.getSala()));
+                    sessoesListModel.addElement(String.format("%s - %s %s (Sala %s)",
+                            sessao.getTitulo(),
+                            sessao.getData(),
+                            sessao.getHora(),
+                            sessao.getSala()));
                 }
             }
         }
 
         // Clear selection
         list1.clearSelection();
-        
+
         // Update UI
         updateSubtotal();
     }
@@ -295,11 +304,11 @@ public class QuioskPage extends JFrame {
             if (sessao.isAtiva()) {
                 Filme filme = dadosFilmes.getFilmePorTitulo(sessao.getTitulo());
                 if (filme != null && filme.isAtivo()) {
-                    sessoesListModel.addElement(String.format("%s - %s %s (Sala %s)", 
-                        sessao.getTitulo(), 
-                        sessao.getData(), 
-                        sessao.getHora(),
-                        sessao.getSala()));
+                    sessoesListModel.addElement(String.format("%s - %s %s (Sala %s)",
+                            sessao.getTitulo(),
+                            sessao.getData(),
+                            sessao.getHora(),
+                            sessao.getSala()));
                 }
             }
         }
@@ -320,7 +329,7 @@ public class QuioskPage extends JFrame {
                 hasBundles = true;
             }
         }
-        
+
         // Hide or show the bundles section
         list3.setVisible(hasBundles);
         // Find and hide/show the bundles label and scrollpane
@@ -353,9 +362,9 @@ public class QuioskPage extends JFrame {
         String sessaoSelecionada = list1.getSelectedValue() != null ? list1.getSelectedValue().toString() : null;
         if (sessaoSelecionada == null) {
             JOptionPane.showMessageDialog(this,
-                "Por favor, selecione uma sessão primeiro.",
-                "Nenhuma sessão selecionada",
-                JOptionPane.WARNING_MESSAGE);
+                    "Por favor, selecione uma sessão primeiro.",
+                    "Nenhuma sessão selecionada",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -364,23 +373,23 @@ public class QuioskPage extends JFrame {
         // Extract session information from the selected item
         Pattern pattern = Pattern.compile("(.*?) - (\\d{2}/\\d{2}/\\d{4}) (\\d{2}:\\d{2}) \\(Sala (.*)\\)");
         Matcher matcher = pattern.matcher(sessaoSelecionada);
-        
+
         if (matcher.find()) {
             String titulo = matcher.group(1);
             String data = matcher.group(2);
             String hora = matcher.group(3);
             String sala = matcher.group(4);
-            
+
             System.out.println("Parsed info - Title: " + titulo + ", Date: " + data + ", Time: " + hora + ", Room: " + sala); // Debug print
-            
+
             Sessao sessao = dadosSessoes.getSessao(titulo, data, hora, sala);
             System.out.println("Found session: " + (sessao != null ? "yes" : "no")); // Debug print
-            
+
             if (sessao != null) {
                 SeatSelectionPage seatPage = new SeatSelectionPage(sessao);
-                seatPage.addWindowListener(new java.awt.event.WindowAdapter() {
+                seatPage.addWindowListener(new WindowAdapter() {
                     @Override
-                    public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                    public void windowClosed(WindowEvent windowEvent) {
                         String newSelectedSeat = seatPage.getSelectedSeat();
                         if (newSelectedSeat != null) {
                             selectedSeat = newSelectedSeat;
@@ -390,16 +399,16 @@ public class QuioskPage extends JFrame {
                 });
             } else {
                 JOptionPane.showMessageDialog(this,
-                    "Erro ao carregar informações da sessão.",
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE);
+                        "Erro ao carregar informações da sessão.",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } else {
             System.out.println("Failed to parse session string"); // Debug print
             JOptionPane.showMessageDialog(this,
-                "Erro ao processar informações da sessão.",
-                "Erro",
-                JOptionPane.ERROR_MESSAGE);
+                    "Erro ao processar informações da sessão.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -408,29 +417,29 @@ public class QuioskPage extends JFrame {
         list1.clearSelection();
         list2.clearSelection();
         list3.clearSelection();
-        
+
         // Reset text fields
         textField1.setText("");
         textField2.setText("");
-        
+
         // Reset radio buttons
         bilheteNormalRadioButton.setSelected(true);
         bilheteComDescontoRadioButton.setSelected(false);
-        
+
         // Reset combo box
         comboBox1.setEnabled(false);
         comboBox1.setSelectedIndex(-1);
-        
+
         // Reset seat selection
         selectedSeat = null;
         escolherLugarButton.setText("Escolher Lugar");
         escolherLugarButton.setEnabled(true);
-        
+
         // Clear list models
         sessoesListModel.clear();
         produtosListModel.clear();
         bundlesListModel.clear();
-        
+
         // Reset price labels
         updateSubtotal();
     }
@@ -439,17 +448,17 @@ public class QuioskPage extends JFrame {
         // Validar seleções
         if (list1.getSelectedValue() == null) {
             JOptionPane.showMessageDialog(this,
-                "Por favor, selecione uma sessão.",
-                "Sessão não selecionada",
-                JOptionPane.WARNING_MESSAGE);
+                    "Por favor, selecione uma sessão.",
+                    "Sessão não selecionada",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (selectedSeat == null) {
             JOptionPane.showMessageDialog(this,
-                "Por favor, selecione um lugar.",
-                "Lugar não selecionado",
-                JOptionPane.WARNING_MESSAGE);
+                    "Por favor, selecione um lugar.",
+                    "Lugar não selecionado",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -457,9 +466,9 @@ public class QuioskPage extends JFrame {
         String nif = textField1.getText().trim();
         if (!nif.isEmpty() && !nif.matches("\\d{9}")) {
             JOptionPane.showMessageDialog(this,
-                "O NIF deve conter 9 dígitos.",
-                "NIF inválido",
-                JOptionPane.WARNING_MESSAGE);
+                    "O NIF deve conter 9 dígitos.",
+                    "NIF inválido",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -473,9 +482,9 @@ public class QuioskPage extends JFrame {
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this,
-                    "Por favor, insira uma idade válida.",
-                    "Idade inválida",
-                    JOptionPane.WARNING_MESSAGE);
+                        "Por favor, insira uma idade válida.",
+                        "Idade inválida",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
         }
@@ -483,22 +492,100 @@ public class QuioskPage extends JFrame {
         // Validar que não há produto e bundle selecionados simultaneamente
         if (list2.getSelectedIndex() != -1 && list3.getSelectedIndex() != -1) {
             JOptionPane.showMessageDialog(this,
-                "Por favor, selecione apenas um produto OU um bundle, não ambos.",
-                "Seleção inválida",
-                JOptionPane.WARNING_MESSAGE);
+                    "Por favor, selecione apenas um produto OU um bundle, não ambos.",
+                    "Seleção inválida",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // TODO: Implementar processamento da compra
-        JOptionPane.showMessageDialog(this,
-            "Compra realizada com sucesso!",
-            "Sucesso",
-            JOptionPane.INFORMATION_MESSAGE);
-        
+        try {
+            // Extrair informações da sessão selecionada
+            String sessaoSelecionada = list1.getSelectedValue().toString();
+            String[] partesSessao = sessaoSelecionada.split(" - ");
+            String tituloFilme = partesSessao[0];
+            String dataHoraSala = partesSessao[1];
+
+            // Extrair sala da string
+            Pattern pattern = Pattern.compile("\\(Sala (.*)\\)");
+            Matcher matcher = pattern.matcher(dataHoraSala);
+            String sala = matcher.find() ? matcher.group(1) : "N/A";
+
+            // Criar nova fatura
+            Fatura novaFatura = dadosFaturas.criarNovaFatura(
+                    nif.isEmpty() ? null : nif,
+                    idade.isEmpty() ? null : idade,
+                    sessaoSelecionada,
+                    sala
+            );
+
+            // Adicionar bilhete à fatura
+            if (bilheteComDescontoRadioButton.isSelected() && comboBox1.getSelectedIndex() != -1) {
+                // Bilhete com desconto
+                String descontoSelecionado = comboBox1.getSelectedItem().toString();
+                String[] partesDesconto = descontoSelecionado.split(" - ");
+                String tipoDesconto = partesDesconto[0];
+                double precoDesconto = Double.parseDouble(partesDesconto[1].replace("€", "").trim());
+                novaFatura.adicionarLinhaBilhete(tipoDesconto, precoDesconto);
+            } else {
+                // Bilhete normal
+                novaFatura.adicionarLinhaBilhete(null, dadosVendas.getPrecoBilhete());
+            }
+
+            // Adicionar produto se selecionado
+            if (list2.getSelectedValue() != null) {
+                String produtoSelecionado = list2.getSelectedValue().toString();
+                String[] partesProduto = produtoSelecionado.split(" - ");
+                String nomeProduto = partesProduto[0];
+                double precoProduto = Double.parseDouble(partesProduto[1].replace("€", "").trim().replace(",", "."));
+                novaFatura.adicionarLinha(nomeProduto, precoProduto, 1);
+            }
+
+            // Adicionar bundle se selecionado
+            if (list3.getSelectedValue() != null) {
+                String bundleSelecionado = list3.getSelectedValue().toString();
+                String[] partesBundle = bundleSelecionado.split(" - ");
+                String nomeBundle = partesBundle[0];
+                double precoBundle = Double.parseDouble(partesBundle[1].replace("€", "").trim().replace(",", "."));
+                novaFatura.adicionarLinha("Bundle: " + nomeBundle, precoBundle, 1);
+            }
+
+            // Adicionar fatura ao sistema
+            dadosFaturas.adicionarFatura(novaFatura);
+
+            // Mostrar mensagem de sucesso com número da fatura
+            JOptionPane.showMessageDialog(this,
+                    "Compra realizada com sucesso!\n" +
+                            "Número da fatura: " + novaFatura.getNumeroFatura() + "\n" +
+                            "Total: " + String.format("%.2f€", novaFatura.getTotal()),
+                    "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            // Opcional: Mostrar detalhes da fatura
+            int opcao = JOptionPane.showConfirmDialog(this,
+                    "Deseja ver os detalhes da fatura?",
+                    "Ver Fatura",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (opcao == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(this,
+                        novaFatura.toString(),
+                        "Detalhes da Fatura " + novaFatura.getNumeroFatura(),
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao processar a compra: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         // Reset all data after successful purchase
         resetData();
-        
+
         // Reload data for new purchase
         carregarDados();
     }
+
 }

@@ -1,7 +1,11 @@
 package restauracao;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.util.Locale;
 
 public class barMainPage extends JFrame {
     private JPanel mainPageBar;
@@ -35,20 +39,20 @@ public class barMainPage extends JFrame {
         // Carregar produtos existentes
         for (Produto produto : dadosRestauracao.getProdutos()) {
             adicionarProduto(
-                produto.getNome(),
-                produto.getPreco(),
-                produto.getStock(),
-                produto.getTipo()
+                    produto.getNome(),
+                    produto.getPreco(),
+                    produto.getStock(),
+                    produto.getTipo()
             );
         }
 
         // Carregar bundles existentes
         for (Bundle bundle : dadosRestauracao.getBundles()) {
             adicionarBundle(
-                bundle.getProdutosString(),
-                bundle.getPreco(),
-                bundle.getStockAgrupado(dadosRestauracao),
-                bundle.getTipo()
+                    bundle.getProdutosString(),
+                    bundle.getPreco(),
+                    bundle.getStockAgrupado(dadosRestauracao),
+                    bundle.getTipo()
             );
         }
 
@@ -76,26 +80,26 @@ public class barMainPage extends JFrame {
             int selectedRow = table2.getSelectedRow();
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(this,
-                    "Por favor, selecione um bundle para remover.",
-                    "Nenhum bundle selecionado",
-                    JOptionPane.WARNING_MESSAGE);
+                        "Por favor, selecione um bundle para remover.",
+                        "Nenhum bundle selecionado",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             String bundleString = (String) table2.getValueAt(selectedRow, 0);
             int option = JOptionPane.showConfirmDialog(this,
-                "Tem certeza que deseja remover o bundle:\n" + bundleString + "?",
-                "Confirmar remoção",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
+                    "Tem certeza que deseja remover o bundle:\n" + bundleString + "?",
+                    "Confirmar remoção",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
 
             if (option == JOptionPane.YES_OPTION) {
                 dadosRestauracao.removerBundle(bundleString);
                 atualizarTabela();
                 JOptionPane.showMessageDialog(this,
-                    "Bundle removido com sucesso!",
-                    "Sucesso",
-                    JOptionPane.INFORMATION_MESSAGE);
+                        "Bundle removido com sucesso!",
+                        "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
@@ -132,21 +136,22 @@ public class barMainPage extends JFrame {
         // Recarregar produtos
         for (Produto produto : dadosRestauracao.getProdutos()) {
             adicionarProduto(
-                produto.getNome(),
-                produto.getPreco(),
-                produto.getStock(),
-                produto.getTipo()
+                    produto.getNome(),
+                    produto.getPreco(),
+                    produto.getStock(),
+                    produto.getTipo()
             );
         }
 
         // Recarregar bundles
         for (Bundle bundle : dadosRestauracao.getBundles()) {
             adicionarBundle(
-                bundle.getProdutosString(),
-                bundle.getPreco(),
-                bundle.getStockAgrupado(dadosRestauracao),
-                bundle.getTipo()
+                    bundle.getProdutosString(),
+                    bundle.getPreco(),
+                    bundle.getStockAgrupado(dadosRestauracao),
+                    bundle.getTipo()
             );
         }
     }
+
 }

@@ -7,6 +7,10 @@ import restauracao.barMainPage;
 import faturas.consultarFatura;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.util.Locale;
 
 public class MenuPage extends JFrame {
     private JPanel menuPage;
@@ -36,4 +40,5 @@ public class MenuPage extends JFrame {
         statsButton.addActionListener(e -> new statsMainPage());
         faturasButton.addActionListener(e -> new consultarFatura());
     }
+
 }

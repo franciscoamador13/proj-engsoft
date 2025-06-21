@@ -1,6 +1,10 @@
 package sessoes;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.util.Locale;
 
 public class SessoesDetalhesPage extends JFrame {
 
@@ -24,7 +28,7 @@ public class SessoesDetalhesPage extends JFrame {
         this.currentData = data;
         this.currentHora = hora;
         this.currentSala = sala;
-        
+
         dadosSessoes = DadosSessoes.getInstance();
         setContentPane(sessoesDetalhesPage);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -52,4 +56,5 @@ public class SessoesDetalhesPage extends JFrame {
         pack();
         setVisible(true);
     }
+
 }

@@ -1,10 +1,13 @@
 package vendas;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.Locale;
 
 public class vendasMainPage extends JFrame {
     private static vendasMainPage instance = null;
@@ -52,7 +55,7 @@ public class vendasMainPage extends JFrame {
 
     private void atualizarDados() {
         DadosVendas dadosVendas = DadosVendas.getInstance();
-        
+
         // Atualizar preço do bilhete
         precoBilheteLabel.setText(String.format("Preço atual do bilhete: %.2f€", dadosVendas.getPrecoBilhete()));
 
@@ -61,8 +64,8 @@ public class vendasMainPage extends JFrame {
         List<Desconto> descontos = dadosVendas.getDescontos();
         for (Desconto desconto : descontos) {
             tableModel.addRow(new Object[]{
-                desconto.getCondicao(),
-                String.format("%.2f", desconto.getValor())
+                    desconto.getCondicao(),
+                    String.format("%.2f", desconto.getValor())
             });
         }
     }
@@ -110,4 +113,5 @@ public class vendasMainPage extends JFrame {
     public void refreshData() {
         atualizarDados();
     }
+
 }

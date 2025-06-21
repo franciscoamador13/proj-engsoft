@@ -1,6 +1,10 @@
 import quiosque.QuioskPage;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
+import java.util.Locale;
 
 public class HomePage extends JFrame {
     private JPanel homePage;
@@ -25,4 +29,5 @@ public class HomePage extends JFrame {
     public static void main(String[] args) {
         new HomePage("Cinema Management App").setVisible(true);
     }
+
 }

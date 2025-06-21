@@ -3,12 +3,16 @@ package sessoes;
 import filmes.DadosFilmes;
 import filmes.Filme;
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.Locale;
 
 public class SessoesMainPage extends JFrame {
     private JPanel sessoesMainPage;
@@ -27,7 +31,7 @@ public class SessoesMainPage extends JFrame {
     public SessoesMainPage() {
         dadosSessoes = DadosSessoes.getInstance();
         dadosFilmes = DadosFilmes.getInstance();
-        
+
         setContentPane(sessoesMainPage);
         setTitle("Gestão de Sessões");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -73,7 +77,7 @@ public class SessoesMainPage extends JFrame {
                 String data = (String) sessoesTable.getValueAt(selectedRow, 1);
                 String hora = (String) sessoesTable.getValueAt(selectedRow, 2);
                 String sala = (String) sessoesTable.getValueAt(selectedRow, 3);
-                
+
                 int option = JOptionPane.showConfirmDialog(null,
                         "Tem a certeza que pretende eliminar a sessão " + titulo + " - " + data + " " + hora + "?",
                         "Confirmar Eliminação",
@@ -132,7 +136,7 @@ public class SessoesMainPage extends JFrame {
     private void carregarFilmes() {
         filmeComboBox.removeAllItems();
         filmeComboBox.addItem("Todos");
-        
+
         List<Filme> filmes = dadosFilmes.getFilmes();
         for (Filme filme : filmes) {
             filmeComboBox.addItem(filme.getTitulo());
@@ -160,15 +164,16 @@ public class SessoesMainPage extends JFrame {
     private void atualizarTabela(String filtro) {
         tableModel.setRowCount(0);
         List<Sessao> sessoes = dadosSessoes.getSessoesFiltradas(filtro, null);
-        
+
         for (Sessao sessao : sessoes) {
             tableModel.addRow(new Object[]{
-                sessao.getTitulo(),
-                sessao.getData(),
-                sessao.getHora(),
-                sessao.getSala(),
-                sessao.isAtiva() ? "Ativa" : "Inativa"
+                    sessao.getTitulo(),
+                    sessao.getData(),
+                    sessao.getHora(),
+                    sessao.getSala(),
+                    sessao.isAtiva() ? "Ativa" : "Inativa"
             });
         }
     }
+
 }

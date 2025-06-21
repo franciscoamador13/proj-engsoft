@@ -1,8 +1,12 @@
 package filmes;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 public class FilmesEditarDetalhesPage extends JFrame {
     private JPanel editarPanel;
@@ -52,12 +56,12 @@ public class FilmesEditarDetalhesPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (validarCampos()) {
                     Filme filmeAtualizado = new Filme(
-                        tipoField.getText(),
-                        realizacaoField.getText(),
-                        duracaoField.getText(),
-                        dataLancamentoField.getText(),
-                        tituloField.getText(),
-                        ativoCheckBox.isSelected()
+                            tipoField.getText(),
+                            realizacaoField.getText(),
+                            duracaoField.getText(),
+                            dataLancamentoField.getText(),
+                            tituloField.getText(),
+                            ativoCheckBox.isSelected()
                     );
 
                     dadosFilmes.atualizarFilme(filmeAtualizado);
@@ -82,12 +86,13 @@ public class FilmesEditarDetalhesPage extends JFrame {
 
     private boolean validarCampos() {
         if (tipoField.getText().trim().isEmpty() ||
-            realizacaoField.getText().trim().isEmpty() ||
-            duracaoField.getText().trim().isEmpty() ||
-            dataLancamentoField.getText().trim().isEmpty()) {
+                realizacaoField.getText().trim().isEmpty() ||
+                duracaoField.getText().trim().isEmpty() ||
+                dataLancamentoField.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios!");
             return false;
         }
         return true;
     }
+
 }

@@ -4,9 +4,13 @@ import salas.DadosSalas;
 import salas.Sala;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class SessoesEditarPage extends JFrame {
     private JPanel sessoesEditarPage;
@@ -31,10 +35,10 @@ public class SessoesEditarPage extends JFrame {
         this.currentData = data;
         this.currentHora = hora;
         this.currentSala = sala;
-        
+
         dadosSessoes = DadosSessoes.getInstance();
         dadosSalas = DadosSalas.getInstance();
-        
+
         setContentPane(sessoesEditarPage);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -46,7 +50,7 @@ public class SessoesEditarPage extends JFrame {
             dataField.setText(sessao.getData());
             horaField.setText(sessao.getHora());
             ativaCheckBox.setSelected(sessao.isAtiva());
-            
+
             // Load available rooms
             carregarSalas();
             salaComboBox.setSelectedItem(sessao.getSala());
@@ -65,9 +69,9 @@ public class SessoesEditarPage extends JFrame {
                     if (!novaData.equals(currentData) || !novaHora.equals(currentHora) || !novaSala.equals(currentSala)) {
                         if (dadosSessoes.existeSessao(currentTitulo, novaData, novaHora, novaSala)) {
                             JOptionPane.showMessageDialog(this,
-                                "Já existe uma sessão neste horário e sala.",
-                                "Erro",
-                                JOptionPane.ERROR_MESSAGE);
+                                    "Já existe uma sessão neste horário e sala.",
+                                    "Erro",
+                                    JOptionPane.ERROR_MESSAGE);
                             return;
                         }
                     }
@@ -77,12 +81,12 @@ public class SessoesEditarPage extends JFrame {
                     sessao.setHora(novaHora);
                     sessao.setSala(novaSala);
                     sessao.setAtiva(novoEstado);
-                    
+
                     dadosSessoes.atualizarSessao(sessao);
                     JOptionPane.showMessageDialog(this,
-                        "Sessão editada com sucesso!",
-                        "Sucesso",
-                        JOptionPane.INFORMATION_MESSAGE);
+                            "Sessão editada com sucesso!",
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 }
             }
@@ -111,9 +115,9 @@ public class SessoesEditarPage extends JFrame {
             dateFormat.parse(data);
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this,
-                "Data inválida. Use o formato dd/MM/yyyy",
-                "Erro",
-                JOptionPane.ERROR_MESSAGE);
+                    "Data inválida. Use o formato dd/MM/yyyy",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -125,21 +129,22 @@ public class SessoesEditarPage extends JFrame {
             timeFormat.parse(hora);
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this,
-                "Hora inválida. Use o formato HH:mm",
-                "Erro",
-                JOptionPane.ERROR_MESSAGE);
+                    "Hora inválida. Use o formato HH:mm",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         // Validate room selection
         if (salaComboBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this,
-                "Selecione uma sala.",
-                "Erro",
-                JOptionPane.ERROR_MESSAGE);
+                    "Selecione uma sala.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         return true;
     }
+
 }

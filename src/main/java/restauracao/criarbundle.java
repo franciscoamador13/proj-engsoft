@@ -1,8 +1,11 @@
 package restauracao;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.util.List;
 import java.awt.*;
+import java.util.Locale;
 
 public class criarbundle extends JFrame {
     private JPanel criarBundlePage;
@@ -18,10 +21,10 @@ public class criarbundle extends JFrame {
         super(title);
         this.mainPage = mainPage;
         this.dadosRestauracao = DadosRestauracao.getInstance();
-        
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setContentPane(criarBundlePage);
-        
+
         // Configurar a lista de produtos
         listModel = new DefaultListModel<>();
         for (Produto produto : dadosRestauracao.getProdutos()) {
@@ -29,17 +32,17 @@ public class criarbundle extends JFrame {
         }
         list1.setModel(listModel);
         list1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        
+
         // Melhorar a aparência da lista
         list1.setBorder(BorderFactory.createTitledBorder("Produtos Disponíveis"));
-        
+
         // Adicionar bordas aos campos
         textField1.setBorder(BorderFactory.createTitledBorder("Preço"));
         textField2.setBorder(BorderFactory.createTitledBorder("Tipo"));
-        
+
         // Adicionar listener ao botão
         criarNovoBundleButton.addActionListener(e -> criarBundle());
-        
+
         // Ajustar o tamanho mínimo da janela
         setMinimumSize(new Dimension(400, 500));
         pack();
@@ -101,4 +104,5 @@ public class criarbundle extends JFrame {
     private void showError(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
     }
+
 }
